@@ -59,6 +59,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -148,45 +149,56 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ErrorHandler.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RedirectingAction.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\ErrorHandlerAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\ProductInfoesController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\Checkout.cs" />
     <Compile Include="Models\EF\Customer.cs">
-      <DependentUpon>EcommerceWebApplication.tt</DependentUpon>
+      <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EF\EcommerceWebApplication.Context.cs">
+    <Compile Include="Models\EF\Ecommerce.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EcommerceWebApplication.Context.tt</DependentUpon>
+      <DependentUpon>Ecommerce.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EF\EcommerceWebApplication.cs">
+    <Compile Include="Models\EF\Ecommerce.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EcommerceWebApplication.tt</DependentUpon>
+      <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EF\EcommerceWebApplication.Designer.cs">
+    <Compile Include="Models\EF\Ecommerce.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EcommerceWebApplication.edmx</DependentUpon>
+      <DependentUpon>Ecommerce.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Order.cs">
-      <DependentUpon>EcommerceWebApplication.tt</DependentUpon>
+      <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\OrderDetail.cs">
-      <DependentUpon>EcommerceWebApplication.tt</DependentUpon>
+      <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\ProductCategory.cs">
-      <DependentUpon>EcommerceWebApplication.tt</DependentUpon>
+      <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\ProductInfo.cs">
-      <DependentUpon>EcommerceWebApplication.tt</DependentUpon>
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\ShoppingCart.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\UserLogin.cs" />
+    <Compile Include="Models\ProdutViewModel.cs" />
+    <Compile Include="Models\EF\Shopping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,27 +211,28 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\EF\EcommerceWebApplication.Context.tt">
+    <Content Include="Images\handicraft.jpg" />
+    <Content Include="Models\EF\Ecommerce.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EcommerceWebApplication.edmx</DependentUpon>
-      <LastGenOutput>EcommerceWebApplication.Context.cs</LastGenOutput>
+      <DependentUpon>Ecommerce.edmx</DependentUpon>
+      <LastGenOutput>Ecommerce.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\EF\EcommerceWebApplication.tt">
+    <Content Include="Models\EF\Ecommerce.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EcommerceWebApplication.edmx</DependentUpon>
-      <LastGenOutput>EcommerceWebApplication.cs</LastGenOutput>
+      <DependentUpon>Ecommerce.edmx</DependentUpon>
+      <LastGenOutput>Ecommerce.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\EF\EcommerceWebApplication.edmx">
+    <EntityDeploy Include="Models\EF\Ecommerce.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EcommerceWebApplication.Designer.cs</LastGenOutput>
+      <LastGenOutput>Ecommerce.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\EF\EcommerceWebApplication.edmx.diagram">
-      <DependentUpon>EcommerceWebApplication.edmx</DependentUpon>
+    <Content Include="Models\EF\Ecommerce.edmx.diagram">
+      <DependentUpon>Ecommerce.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -233,7 +246,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Style\StyleSheet1.css" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -241,7 +256,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -252,6 +266,12 @@
     <Content Include="Views\Customers\Login.cshtml" />
     <Content Include="Views\Customers\Welcome.cshtml" />
     <Content Include="Views\ProductInfoes\Details.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_ViewStart.cshtml" />
+    <Content Include="Views\ShoppingCart\AddToCart.cshtml" />
+    <Content Include="Views\ShoppingCart\Cart.cshtml" />
+    <Content Include="Views\Order\OrderDetails.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />

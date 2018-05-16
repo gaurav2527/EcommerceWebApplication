@@ -6,11 +6,11 @@
 
     public partial class UserLogin
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        /*[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserLogin()
         {
             this.Orders = new HashSet<Order>();
-        }
+        }*/
 
         [Required(ErrorMessage = "This field is required")]
         [DisplayName("Email")]
@@ -20,7 +20,7 @@
         [DisplayName("Password")]
         public string CustomerPassword { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+       // [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+//public virtual ICollection<Order> Orders { get; set; }
     }
 }

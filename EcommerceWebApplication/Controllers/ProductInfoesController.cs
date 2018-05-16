@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EcommerceWebApplication.Models.EF;
+using EcommerceWebApplication.Models;
 
 namespace EcommerceWebApplication.Controllers
 {
@@ -14,20 +15,18 @@ namespace EcommerceWebApplication.Controllers
     {
         private ECommerce db = new ECommerce();
         private ProductInfo pro = new ProductInfo();
-
-       
+       // private ShoppingCart cart = new ShoppingCart();
 
         // GET: ProductInfoes
         public ActionResult Details()
         {
-            
-                var productInfoes = db.ProductInfoes.Include(p => p.ProductCategory);
-                
-            return View(productInfoes.ToList());
+            ProdutViewModel product = new ProdutViewModel();
+            product.ProductCategory = db.ProductCategories.ToList();
+            product.ProductInfo = db.ProductInfoes.ToList();    
+                //var productInfoes = db.ProductInfoes.Include(p => p.ProductCategory).ToList();
+            return View(product);
             /*return View(from pro in db.ProductInfoes.Take(1)
                         select pro);*/
         }
-
-
     }
 }

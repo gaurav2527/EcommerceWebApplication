@@ -24,7 +24,6 @@ namespace EcommerceWebApplication.Models.EF
         public string ProductName { get; set; }
         public decimal ProductPrice { get; set; }
         public string Color { get; set; }
-        
         public int ProductCategoryID { get; set; }
         public string Photo { get; set; }
     

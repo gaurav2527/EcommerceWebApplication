@@ -19,17 +19,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    @Html.ActionLink("Impulse Shopping", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Response Shopping", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Products", "Details", "ProductInfoes")</li>
-                        <li>@Html.ActionLink("Shop By Category", "Index", "Home")</li>
+
                         <li>@Html.ActionLink("Contact", "Index", "Home")</li>
                         <li>@Html.ActionLink("Signup", "Create", "Customers")</li>
                         <li>@Html.ActionLink("Login", "Login", "Customers")</li>
+                        <li>@Html.ActionLink("Cart", "Checkout", "ShoppingCart")</li>
                     </ul>
                 </div>
             </div>

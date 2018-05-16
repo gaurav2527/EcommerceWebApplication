@@ -53,6 +53,15 @@
           <Property Name="ProductCategoryID" Type="int" Nullable="false" />
           <Property Name="Photo" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <Association Name="FK_OrderDetails_Orders">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
@@ -107,6 +116,7 @@
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductInfo" EntityType="Self.ProductInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
@@ -132,7 +142,7 @@
           <Key>
             <PropertyRef Name="CustomerID" />
           </Key>
-          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
@@ -180,9 +190,18 @@
           <Property Name="ProductPrice" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ProductCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Photo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_ProductInfo" FromRole="ProductInfo" ToRole="OrderDetails" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_ProductInfo_ProductCategory" FromRole="ProductInfo" ToRole="ProductCategory" />
-          <Property Name="Photo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <Association Name="FK_Orders_Orders">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
@@ -238,6 +257,7 @@
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
           <EntitySet Name="ProductInfoes" EntityType="Self.ProductInfo" />
+          <EntitySet Name="ShoppingCarts" EntityType="Self.ShoppingCart" />
           <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
@@ -305,12 +325,22 @@
           <EntitySetMapping Name="ProductInfoes">
             <EntityTypeMapping TypeName="ECommerceModel.ProductInfo">
               <MappingFragment StoreEntitySet="ProductInfo">
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCarts">
+            <EntityTypeMapping TypeName="ECommerceModel.ShoppingCart">
+              <MappingFragment StoreEntitySet="ShoppingCart">
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

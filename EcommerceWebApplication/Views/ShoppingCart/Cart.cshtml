@@ -1,0 +1,85 @@
+﻿@model EcommerceWebApplication.Models.ProdutViewModel
+
+@{
+    ViewBag.Title = "Cart";
+}
+<div class="container">
+    <h2>Your Cart</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Product Price</th>
+            </tr>
+        </thead>
+        <tbody id="cartBody"></tbody>
+    </table>
+    <input type="submit" class="btn btn-info" id="checkout" value="Checkout">
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var cart = JSON.parse(localStorage.getItem("cart"));
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        showCart();
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function showCart() {
+        var data = JSON.parse(localStorage.getItem("cart"));
+        if (data.length != null) {
+            $("#cartBody").empty();
+            for (var i in data) {
+                var item = data[i];
+                var TotalAmount = item.Quantity * item.ProductPrice;
+                var row = "<tr><td>" + item.ProductName + "</td><td>" +
+                    item.Quantity + "</td><td>"
+                    + TotalAmount + "</td><td>"
+                    + "<button onclick='removeItem(" + i + ")'>Delete</button></td></tr>";
+                $("#cartBody").append(row);
+            }
+        }
+        else {
+            console.log("You don't have products in your Cart");
+        }
+    }
+    
+    $(document).ready(function ()
+    { 
+        showCart();
+    });
+
+        $('#checkout').click(function passData() {
+           // var arr = new Array();
+            //var counter = 0;
+            var obj = {};
+            for (var i = 0; i < localStorage.length; i++)
+            {
+                obj = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                //debugger
+                //arr[counter] = { Name: obj.ProductName, Qty:obj.Quantity, Price:obj.ProductPrice }
+                //debugger
+                //counter++;
+            }
+            debugger
+            console.log(obj);
+            $.ajax({
+                method: "POST",
+                dataType: "JSON",
+                url: "/ShoppingCart/Checkout",
+                data: JSON.stringify(obj),
+                contentType: "application/json",
+                success: function (result) {
+                    alert("hie added");
+                },
+                error: (msg) => { console.log(msg) },
+                timeout: 3000
+            });
+        });            
+</script>

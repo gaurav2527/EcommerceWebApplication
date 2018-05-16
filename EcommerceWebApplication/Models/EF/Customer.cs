@@ -20,17 +20,16 @@ namespace EcommerceWebApplication.Models.EF
         {
             this.Orders = new HashSet<Order>();
         }
-    
+        
         public int CustomerID { get; set; }
         [Required]
         public string CustomerName { get; set; }
-        [Required]
         public string State { get; set; }
-        [Required]
         public string Address { get; set; }
-        [Required]
+        [Phone]
         public string ContactNumber { get; set; }
         [Required]
+        [EmailAddress]
         public string email { get; set; }
         [Required]
         public string CustomerPassword { get; set; }

@@ -14,6 +14,9 @@ namespace EcommerceWebApplication.Controllers
     {
         private ECommerce db = new ECommerce();
         private Customer customer = new Customer();
+ 
+        
+    
 
         //public Customer Customer1 { get => Customer; set => Customer = value; }
 
@@ -50,7 +53,6 @@ namespace EcommerceWebApplication.Controllers
                 //id++;
                 return RedirectToAction("Index");
             }
-
             return View(customer);
         }
 
@@ -65,14 +67,19 @@ namespace EcommerceWebApplication.Controllers
         public ActionResult Login([Bind(Include = "Email,CustomerPassword")]UserLogin user)
         {
             if (ModelState.IsValid)
-                
                 {
                     var obj = db.Customers.Where(a => a.email.Equals(user.email) && a.CustomerPassword.Equals(user.CustomerPassword)).FirstOrDefault();
                     if(obj!=null)
                 {
                     Session["CustomerID"] = obj.CustomerID.ToString();
                     Session["email"] = obj.email.ToString();
-                    return RedirectToAction("Welcome");
+                    HttpCookie cookie = new HttpCookie("UserInfo");
+                    cookie["Email"] = obj.email.ToString();
+                    cookie["CustomerPassword"] = obj.CustomerPassword.ToString();
+                    cookie.Expires = DateTime.Now.AddHours(1);
+                    Response.Cookies.Add(cookie);
+                    return RedirectToAction("Cart","ShoppingCart");
+                    //return RedirectToAction("Cart", "ShoppingCart");
                 }
                 }
             return View("Login");
@@ -82,6 +89,7 @@ namespace EcommerceWebApplication.Controllers
         {
             if(Session["CustomerID"]!=null)
             {
+               //return RedirectToAction("Cart","ShoppingCart");
                 return View();
             }
 
