@@ -14,9 +14,6 @@ namespace EcommerceWebApplication.Controllers
     {
         private ECommerce db = new ECommerce();
         private Customer customer = new Customer();
- 
-        
-    
 
         //public Customer Customer1 { get => Customer; set => Customer = value; }
 

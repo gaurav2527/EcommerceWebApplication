@@ -105,17 +105,17 @@ namespace EcommerceWebApplication.Controllers
                     transaction.Commit();
                 }
             }
-            //var urlBuilder = new UrlHelper(Request.RequestContext);
-            //var url = urlBuilder.Action("Welcome", "Customers");
-            //return Json(new { status = "success", redirectUrl = url });
-           return RedirectToAction("Welcome", "Customers");
+            var urlBuilder = new UrlHelper(Request.RequestContext);
+            var url = urlBuilder.Action("Welcome", "Customers");
+            return Json(new { status = "success", redirectUrl = url });
+           //return RedirectToAction("Welcome", "Customers");
             //return View("~/Views/Customers/Welcome.cshtml");
             //return View("~/Views/ShoppingCart/Cart.cshtml");
         }
 
-        public ActionResult Checkout()
-        {
-            return View("~/Views/ShoppingCart/Cart.cshtml");
-        }
+        //public ActionResult Checkout()
+        //{
+          //  return View("~/Views/ShoppingCart/Cart.cshtml");
+        //}
     }
 }

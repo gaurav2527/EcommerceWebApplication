@@ -75,8 +75,12 @@
                 url: "/ShoppingCart/Checkout",
                 data: JSON.stringify(obj),
                 contentType: "application/json",
-                success: function (result) {
-                    alert("hie added");
+                success: function (response) {
+                    if (response.status == "success")
+                    {
+                        window.location = response.redirectUrl;
+                        localStorage.clear();
+                    }   
                 },
                 error: (msg) => { console.log(msg) },
                 timeout: 3000

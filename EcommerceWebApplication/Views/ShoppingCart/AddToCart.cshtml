@@ -44,7 +44,8 @@
         $(function () {
             $('#buttonSubmit').click(function AddToCart()
             {
-                var cart = [];
+                //var cart = [];
+                var stored = [];
                 var price = "@Html.DisplayFor(model => model.ProductDetails.ProductPrice)";
                 debugger
                 var name = "@Html.DisplayFor(model => model.ProductDetails.ProductName)";
@@ -52,15 +53,16 @@
                 var quantity = $('#quantity').val();
                 debugger
                 //retrieve previous data stored in local storage
-                var retrievedObject = localStorage.getItem("cart");
+                var retrievedObject = JSON.parse(localStorage.getItem("cart")) || [];
                 debugger
-                var stored = JSON.parse(retrievedObject);
+                //var storedresult = JSON.parse(retrievedObject);
+                //stored.push(storedresult);
                 // Assign new product in item
-                var item = { ProductName: name, Quantity: quantity, ProductPrice: price }
+                var item = { "ProductName": name, "Quantity": quantity, "ProductPrice": price }
                 debugger
-                .push(item);
+                retrievedObject.push(item);
                 debugger
-                localStorage.setItem("cart", JSON.stringify(stored));
+                localStorage.setItem("cart", JSON.stringify(retrievedObject));
                 debugger
             });
         });             
