@@ -113,9 +113,9 @@ namespace EcommerceWebApplication.Controllers
             //return View("~/Views/ShoppingCart/Cart.cshtml");
         }
 
-        //public ActionResult Checkout()
-        //{
-          //  return View("~/Views/ShoppingCart/Cart.cshtml");
-        //}
+        /*public ActionResult FinalCart()
+        {
+            return View("~/Views/ShoppingCart/Cart.cshtml");
+        }*/
     }
 }

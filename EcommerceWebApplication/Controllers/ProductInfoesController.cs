@@ -22,7 +22,7 @@ namespace EcommerceWebApplication.Controllers
         {
             ProdutViewModel product = new ProdutViewModel();
             product.ProductCategory = db.ProductCategories.ToList();
-            product.ProductInfo = db.ProductInfoes.ToList();    
+            product.ProductInfo = db.ProductInfoes.ToList();
                 //var productInfoes = db.ProductInfoes.Include(p => p.ProductCategory).ToList();
             return View(product);
             /*return View(from pro in db.ProductInfoes.Take(1)

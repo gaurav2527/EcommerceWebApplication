@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "AddToCart";
 }
-<
+
 <h2>AddToCart</h2>
 
 <div>
@@ -45,7 +45,8 @@
             $('#buttonSubmit').click(function AddToCart()
             {
                 //var cart = [];
-                var stored = [];
+                //var stored = [];
+                var cart = [];
                 var price = "@Html.DisplayFor(model => model.ProductDetails.ProductPrice)";
                 debugger
                 var name = "@Html.DisplayFor(model => model.ProductDetails.ProductName)";
@@ -53,16 +54,29 @@
                 var quantity = $('#quantity').val();
                 debugger
                 //retrieve previous data stored in local storage
-                var retrievedObject = JSON.parse(localStorage.getItem("cart")) || [];
+                var cart = JSON.parse(localStorage.getItem("cart")) || [];
                 debugger
+                for (var i in cart)
+                {
+
+                    if (cart[i].ProductName == name)
+                    {
+                        var x = cart[i].Quantity;
+                        var y = parseInt(x, 10);
+                        var z = parseInt(quantity, 10);
+                        cart[i].Quantity = y + z;
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        return;
+                    }
+                }
                 //var storedresult = JSON.parse(retrievedObject);
                 //stored.push(storedresult);
                 // Assign new product in item
-                var item = { "ProductName": name, "Quantity": quantity, "ProductPrice": price }
+                var item = { "ProductName": name, "Quantity": quantity, "ProductPrice": price };
                 debugger
-                retrievedObject.push(item);
+                cart.push(item);
                 debugger
-                localStorage.setItem("cart", JSON.stringify(retrievedObject));
+                localStorage.setItem("cart", JSON.stringify(cart));
                 debugger
             });
         });             

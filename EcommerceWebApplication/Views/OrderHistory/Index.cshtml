@@ -1,0 +1,42 @@
+﻿@model EcommerceWebApplication.Models.ProdutViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Order History</h2>
+
+<div>
+    <h4>ShoppingCart</h4>
+
+    <hr />
+    @foreach (var item in Model.ShoppingCart)
+    {
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => item.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => item.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => item.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => item.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => item.TotalAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => item.TotalAmount)
+        </dd>
+    </dl>
+    }
+</div>
