@@ -14,6 +14,7 @@ namespace EcommerceWebApplication.Controllers
     {
         private ECommerce db = new ECommerce();
         private Customer customer = new Customer();
+        private CustomerLastLogin lastlogin = new CustomerLastLogin();
 
         //public Customer Customer1 { get => Customer; set => Customer = value; }
 
@@ -68,14 +69,25 @@ namespace EcommerceWebApplication.Controllers
                     var obj = db.Customers.Where(a => a.email.Equals(user.email) && a.CustomerPassword.Equals(user.CustomerPassword)).FirstOrDefault();
                     if(obj!=null)
                 {
+                    //Create session after user login
                     Session["CustomerID"] = obj.CustomerID.ToString();
                     Session["email"] = obj.email.ToString();
-                    HttpCookie cookie = new HttpCookie("UserInfo");
-                    cookie["Email"] = obj.email.ToString();
-                    cookie["CustomerPassword"] = obj.CustomerPassword.ToString();
-                    cookie.Expires = DateTime.Now.AddHours(1);
-                    Response.Cookies.Add(cookie);
-                    return RedirectToAction("Cart","ShoppingCart");
+
+                    //Store Last login Details of customer
+                    DateTime localDate = DateTime.Now;
+                    lastlogin.CustomerID = obj.CustomerID;
+                    lastlogin.LoginDateTime = localDate;
+                    db.CustomerLastLogins.Add(lastlogin);
+                    db.SaveChanges();
+                    return RedirectToAction("Cart", "ShoppingCart");
+
+                    //Implemented cookies concept
+                    //HttpCookie cookie = new HttpCookie("UserInfo");
+                    //cookie["Email"] = obj.email.ToString();
+                    //cookie["CustomerPassword"] = obj.CustomerPassword.ToString();
+                    //cookie.Expires = DateTime.Now.AddHours(1);
+                    //Response.Cookies.Add(cookie);
+                    //return RedirectToAction("Cart","ShoppingCart");
                     //return RedirectToAction("Cart", "ShoppingCart");
                 }
                 }

@@ -12,12 +12,12 @@ namespace EcommerceWebApplication.Models.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class ShoppingCart
+    public partial class CustomerLastLogin
     {
-        public int CartId { get; set; }
-        public int Quantity { get; set; }
-        public decimal TotalAmount { get; set; }
-        public string ProductName { get; set; }
-        public Nullable<System.DateTime> OrderDate { get; set; }
+        public int LoginID { get; set; }
+        public Nullable<int> CustomerID { get; set; }
+        public Nullable<System.DateTime> LoginDateTime { get; set; }
+    
+        public virtual Customer Customer { get; set; }
     }
 }

@@ -31,5 +31,6 @@ namespace EcommerceWebApplication.Models.EF
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
         public virtual DbSet<ProductInfo> ProductInfoes { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public virtual DbSet<CustomerLastLogin> CustomerLastLogins { get; set; }
     }
 }

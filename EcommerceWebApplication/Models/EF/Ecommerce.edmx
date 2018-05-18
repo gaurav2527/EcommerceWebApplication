@@ -4,67 +4,88 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ECommerceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="ECommerceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerID" />
           </Key>
-          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerName" Type="varchar(max)" Nullable="false" />
-          <Property Name="State" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="Address" Type="varchar(max)" Nullable="false" />
-          <Property Name="ContactNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="50" />
-          <Property Name="CustomerPassword" Type="varchar" MaxLength="50" />
+          <Property Name="CustomerID" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="CustomerName" Nullable="false" Type="varchar(max)" />
+          <Property Name="State" Nullable="false" MaxLength="250" Type="varchar" />
+          <Property Name="Address" Nullable="false" Type="varchar(max)" />
+          <Property Name="ContactNumber" Nullable="false" MaxLength="10" Type="nvarchar" />
+          <Property Name="email" MaxLength="50" Type="varchar" />
+          <Property Name="CustomerPassword" MaxLength="50" Type="varchar" />
+        </EntityType>
+        <EntityType Name="CustomerLastLogin">
+          <Key>
+            <PropertyRef Name="LoginID" />
+          </Key>
+          <Property Name="LoginID" Nullable="false" Type="int" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="LoginDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
             <PropertyRef Name="OrderDetailID" />
           </Key>
-          <Property Name="OrderDetailID" Type="int" Nullable="false" />
-          <Property Name="OrderID" Type="int" Nullable="false" />
-          <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="OrderDetailID" Nullable="false" Type="int" />
+          <Property Name="OrderID" Nullable="false" Type="int" />
+          <Property Name="ProductID" Nullable="false" Type="int" />
+          <Property Name="Quantity" Nullable="false" Type="int" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="OrderID" />
           </Key>
-          <Property Name="OrderID" Type="int" Nullable="false" />
-          <Property Name="CustomerID" Type="int" Nullable="false" />
-          <Property Name="OrderDate" Type="date" Nullable="false" />
+          <Property Name="OrderID" Nullable="false" Type="int" />
+          <Property Name="CustomerID" Nullable="false" Type="int" />
+          <Property Name="OrderDate" Nullable="false" Type="date" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
             <PropertyRef Name="ProductCategoryID" />
           </Key>
-          <Property Name="ProductCategoryID" Type="int" Nullable="false" />
-          <Property Name="ProductCategory" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="ProductCategoryID" Nullable="false" Type="int" />
+          <Property Name="ProductCategory" Nullable="false" MaxLength="50" Type="nvarchar" />
+          <Property Name="CategoryID" Nullable="false" Type="int" />
         </EntityType>
         <EntityType Name="ProductInfo">
           <Key>
             <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="ProductName" Type="varchar(max)" Nullable="false" />
-          <Property Name="ProductPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductID" Nullable="false" Type="int" />
+          <Property Name="ProductName" Nullable="false" Type="varchar(max)" />
+          <Property Name="ProductPrice" Nullable="false" Precision="18" Scale="0" Type="decimal" />
           <Property Name="Color" Type="varchar(max)" />
-          <Property Name="ProductCategoryID" Type="int" Nullable="false" />
-          <Property Name="Photo" Type="nvarchar" MaxLength="100" />
+          <Property Name="ProductCategoryID" Nullable="false" Type="int" />
+          <Property Name="Photo" MaxLength="100" Type="nvarchar" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
             <PropertyRef Name="CartId" />
           </Key>
-          <Property Name="CartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Quantity" Type="int" Nullable="false" />
-          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="ProductName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CartId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Quantity" Nullable="false" Type="int" />
+          <Property Name="TotalAmount" Nullable="false" Precision="18" Scale="3" Type="decimal" />
+          <Property Name="ProductName" Nullable="false" Type="nvarchar(max)" />
+          <Property Name="OrderDate" Type="datetime" />
         </EntityType>
+        <Association Name="FK_CustomerLastLogin_Customer">
+          <End Type="Self.Customer" Multiplicity="0..1" Role="Customer" />
+          <End Type="Self.CustomerLastLogin" Multiplicity="*" Role="CustomerLastLogin" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="CustomerLastLogin">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderDetails_Orders">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <End Type="Self.Orders" Multiplicity="1" Role="Orders" />
+          <End Type="Self.OrderDetails" Multiplicity="*" Role="OrderDetails" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="OrderID" />
@@ -75,8 +96,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderDetails_ProductInfo">
-          <End Role="ProductInfo" Type="Self.ProductInfo" Multiplicity="1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <End Type="Self.ProductInfo" Multiplicity="1" Role="ProductInfo" />
+          <End Type="Self.OrderDetails" Multiplicity="*" Role="OrderDetails" />
           <ReferentialConstraint>
             <Principal Role="ProductInfo">
               <PropertyRef Name="ProductID" />
@@ -87,8 +108,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Orders">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <End Type="Self.Customer" Multiplicity="1" Role="Customer" />
+          <End Type="Self.Orders" Multiplicity="*" Role="Orders" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="CustomerID" />
@@ -99,8 +120,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductInfo_ProductCategory">
-          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
-          <End Role="ProductInfo" Type="Self.ProductInfo" Multiplicity="*" />
+          <End Type="Self.ProductCategory" Multiplicity="1" Role="ProductCategory" />
+          <End Type="Self.ProductInfo" Multiplicity="*" Role="ProductInfo" />
           <ReferentialConstraint>
             <Principal Role="ProductCategory">
               <PropertyRef Name="ProductCategoryID" />
@@ -112,26 +133,31 @@
         </Association>
         <EntityContainer Name="ECommerceModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerLastLogin" EntityType="Self.CustomerLastLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductInfo" EntityType="Self.ProductInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CustomerLastLogin_Customer" Association="Self.FK_CustomerLastLogin_Customer">
+            <End EntitySet="Customer" Role="Customer" />
+            <End EntitySet="CustomerLastLogin" Role="CustomerLastLogin" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
+            <End EntitySet="Orders" Role="Orders" />
+            <End EntitySet="OrderDetails" Role="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_ProductInfo" Association="Self.FK_OrderDetails_ProductInfo">
-            <End Role="ProductInfo" EntitySet="ProductInfo" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
+            <End EntitySet="ProductInfo" Role="ProductInfo" />
+            <End EntitySet="OrderDetails" Role="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Orders" EntitySet="Orders" />
+            <End EntitySet="Customer" Role="Customer" />
+            <End EntitySet="Orders" Role="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductInfo_ProductCategory" Association="Self.FK_ProductInfo_ProductCategory">
-            <End Role="ProductCategory" EntitySet="ProductCategory" />
-            <End Role="ProductInfo" EntitySet="ProductInfo" />
+            <End EntitySet="ProductCategory" Role="ProductCategory" />
+            <End EntitySet="ProductInfo" Role="ProductInfo" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -150,6 +176,7 @@
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CustomerPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Orders" FromRole="Customer" ToRole="Orders" />
+          <NavigationProperty Name="CustomerLastLogins" Relationship="ECommerceModel.FK_CustomerLastLogin_Customer" FromRole="Customer" ToRole="CustomerLastLogin" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -202,6 +229,7 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="ProductName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Orders_Orders">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
@@ -274,7 +302,33 @@
             <End Role="ProductCategory" EntitySet="ProductCategories" />
             <End Role="ProductInfo" EntitySet="ProductInfoes" />
           </AssociationSet>
+          <EntitySet Name="CustomerLastLogins" EntityType="ECommerceModel.CustomerLastLogin" />
+          <AssociationSet Name="FK_CustomerLastLogin_Customer" Association="ECommerceModel.FK_CustomerLastLogin_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerLastLogin" EntitySet="CustomerLastLogins" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="CustomerLastLogin">
+          <Key>
+            <PropertyRef Name="LoginID" />
+          </Key>
+          <Property Name="LoginID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="LoginDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="ECommerceModel.FK_CustomerLastLogin_Customer" FromRole="CustomerLastLogin" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_CustomerLastLogin_Customer">
+          <End Type="ECommerceModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="ECommerceModel.CustomerLastLogin" Role="CustomerLastLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="CustomerLastLogin">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -337,10 +391,20 @@
           <EntitySetMapping Name="ShoppingCarts">
             <EntityTypeMapping TypeName="ECommerceModel.ShoppingCart">
               <MappingFragment StoreEntitySet="ShoppingCart">
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="CartId" ColumnName="CartId" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerLastLogins">
+            <EntityTypeMapping TypeName="ECommerceModel.CustomerLastLogin">
+              <MappingFragment StoreEntitySet="CustomerLastLogin">
+                <ScalarProperty Name="LoginDateTime" ColumnName="LoginDateTime" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

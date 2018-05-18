@@ -85,11 +85,13 @@ namespace EcommerceWebApplication.Controllers
                             {
                                 ShoppingCart cart = new ShoppingCart();
 
+                                DateTime localDate = DateTime.Now;
                                 cart.CartId = item.CartId;
                                 cart.ProductName = item.ProductName;
                                 cart.Quantity = item.Quantity;
                                 decimal total = (item.Quantity * Convert.ToDecimal(item.Productprice));
                                 cart.TotalAmount = total;
+                                cart.OrderDate = localDate;
 
                                 product.ShoppingCarts.Add(cart);
                                 product.SaveChanges();
