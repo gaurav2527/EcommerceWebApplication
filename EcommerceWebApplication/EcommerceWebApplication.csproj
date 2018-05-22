@@ -156,13 +156,16 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\ErrorHandlerAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LastLoginController.cs" />
     <Compile Include="Controllers\OrderHistoryController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\ProductInfoesController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\UserConstants.cs" />
     <Compile Include="Models\EF\Checkout.cs" />
     <Compile Include="Models\EF\Customer.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
@@ -185,6 +188,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Ecommerce.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\getUserByDate_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\Order.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
@@ -197,10 +203,19 @@
     <Compile Include="Models\EF\ProductInfo.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\Role.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\ShoppingCart.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\UserLogin.cs" />
+    <Compile Include="Models\EF\usps_LastUserLogin_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\usps_Role_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProdutViewModel.cs" />
     <Compile Include="Models\EF\Shopping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -277,6 +292,8 @@
     <Content Include="Views\Order\OrderDetails.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\OrderHistory\Index.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\LastLogin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />

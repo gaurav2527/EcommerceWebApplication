@@ -21,7 +21,7 @@ namespace EcommerceWebApplication.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            return View(db.Customers.ToList());
+           return View(db.Customers.ToList());
         }
 
         // GET: Customers/Details/5
@@ -69,13 +69,16 @@ namespace EcommerceWebApplication.Controllers
                     var obj = db.Customers.Where(a => a.email.Equals(user.email) && a.CustomerPassword.Equals(user.CustomerPassword)).FirstOrDefault();
                     if(obj!=null)
                 {
-                    //Create session after user login
+                    //Creating session after user login
                     Session["CustomerID"] = obj.CustomerID.ToString();
                     Session["email"] = obj.email.ToString();
-
+                    Session["name"] = obj.CustomerName.ToString();
+                    Session["Role"] = obj.Role;
+                    
                     //Store Last login Details of customer
                     DateTime localDate = DateTime.Now;
                     lastlogin.CustomerID = obj.CustomerID;
+
                     lastlogin.LoginDateTime = localDate;
                     db.CustomerLastLogins.Add(lastlogin);
                     db.SaveChanges();

@@ -17,6 +17,10 @@ namespace EcommerceWebApplication.Models
         public IEnumerable<Customer> Customers { get; set; } = new List<Customer>();
         public IEnumerable<Checkout> Checkout { get; set; } = new List<Checkout>();
         public IEnumerable<CustomerLastLogin> CustomerLastLogin { get; set; } = new List<CustomerLastLogin>();
+        public IEnumerable<Role> Role { get; set; } = new List<Role>();
+
+
+        //public IEnumerable<MainLinkData> MainLinkData { get; set; } = new List<MainLinkData>();
 
         //public IEnumerable<ShoppingCart> OrderDetails { get; set; } = new List<ShoppingCart>();
         //public ShoppingCart OrderDetails { get; set; } = new ShoppingCart();

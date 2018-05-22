@@ -14,7 +14,7 @@ namespace EcommerceWebApplication.Controllers
     public class ProductInfoesController : Controller
     {
         private ECommerce db = new ECommerce(); 
-        private ProductInfo pro = new ProductInfo();
+        private ProductInfo pro = new ProductInfo(); 
        // private ShoppingCart cart = new ShoppingCart();
 
         // GET: ProductInfoes

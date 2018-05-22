@@ -12,6 +12,8 @@ namespace EcommerceWebApplication.Models.EF
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ECommerce : DbContext
     {
@@ -32,5 +34,29 @@ namespace EcommerceWebApplication.Models.EF
         public virtual DbSet<ProductInfo> ProductInfoes { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public virtual DbSet<CustomerLastLogin> CustomerLastLogins { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+    
+        public virtual ObjectResult<getUserByDate_Result> getUserByDate(Nullable<int> customerID)
+        {
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getUserByDate_Result>("getUserByDate", customerIDParameter);
+        }
+    
+        public virtual ObjectResult<usps_LastUserLogin_Result> usps_LastUserLogin(Nullable<int> customerID)
+        {
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_LastUserLogin_Result>("usps_LastUserLogin", customerIDParameter);
+        }
+    
+        public virtual ObjectResult<usps_Role_Result> usps_Role()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_Role_Result>("usps_Role");
+        }
     }
 }

@@ -28,10 +28,12 @@ namespace EcommerceWebApplication.Models.EF
         public string ContactNumber { get; set; }
         public string email { get; set; }
         public string CustomerPassword { get; set; }
+        public int Role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerLastLogin> CustomerLastLogins { get; set; }
+        public virtual Role Role1 { get; set; }
     }
 }
