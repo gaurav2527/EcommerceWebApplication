@@ -2,6 +2,6 @@
 
 @if (Convert.ToInt32(Session["Role"]) == Convert.ToInt32(UserConstants.Role.Admin))
 {
-    
     <li>@Html.ActionLink("Admin", "Index", "Customers")</li>
 }
+

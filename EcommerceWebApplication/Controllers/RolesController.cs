@@ -21,7 +21,16 @@ namespace EcommerceWebApplication.Controllers
             role.Role = db.Roles.ToList();
             var roleId = Session["Role"];
             string username = Convert.ToString(Session["name"]);
+            //var results = Users();
             return PartialView();
         }
+
+        /*private List<usps_Customers_Result> Users()
+        {
+            using (ECommerce db = new ECommerce())
+            {
+                return db.usps_Customers().ToList();
+            }
+        }*/
     }
 }

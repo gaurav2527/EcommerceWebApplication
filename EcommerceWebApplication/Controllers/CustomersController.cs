@@ -67,14 +67,22 @@ namespace EcommerceWebApplication.Controllers
             if (ModelState.IsValid)
                 {
                     var obj = db.Customers.Where(a => a.email.Equals(user.email) && a.CustomerPassword.Equals(user.CustomerPassword)).FirstOrDefault();
-                    if(obj!=null)
+                   
+
+                if (obj!=null)
                 {
                     //Creating session after user login
                     Session["CustomerID"] = obj.CustomerID.ToString();
                     Session["email"] = obj.email.ToString();
                     Session["name"] = obj.CustomerName.ToString();
                     Session["Role"] = obj.Role;
-                    
+
+                    //Session["LastLogin"] = lastlogin.LoginDateTime;
+                    //Save last login time in session using proc
+                    int customerID = Convert.ToInt32(Session["CustomerID"]);
+                    var result = Customer(customerID).FirstOrDefault();
+                    Session["LastLogin"] = result.LoginDateTime.ToString();
+
                     //Store Last login Details of customer
                     DateTime localDate = DateTime.Now;
                     lastlogin.CustomerID = obj.CustomerID;
@@ -95,6 +103,14 @@ namespace EcommerceWebApplication.Controllers
                 }
                 }
             return View("Login");
+        }
+
+        private List<usps_LastUserLogin_Result> Customer(int CustomerID)
+        {
+            using (ECommerce db = new ECommerce())
+            {
+                return db.usps_LastUserLogin(CustomerID).ToList();
+            }
         }
 
         public ActionResult Welcome()

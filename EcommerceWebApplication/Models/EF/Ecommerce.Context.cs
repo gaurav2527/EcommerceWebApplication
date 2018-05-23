@@ -58,5 +58,10 @@ namespace EcommerceWebApplication.Models.EF
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_Role_Result>("usps_Role");
         }
+    
+        public virtual ObjectResult<usps_Customers_Result> usps_Customers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_Customers_Result>("usps_Customers");
+        }
     }
 }

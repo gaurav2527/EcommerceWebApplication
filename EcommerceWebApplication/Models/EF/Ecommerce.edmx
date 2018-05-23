@@ -154,6 +154,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="usps_Customers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usps_LastUserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerID" Type="int" Mode="In" />
         </Function>
@@ -354,6 +355,7 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
+          <FunctionImport Name="usps_Customers" ReturnType="Collection(ECommerceModel.usps_Customers_Result)" />
         </EntityContainer>
         <EntityType Name="CustomerLastLogin">
           <Key>
@@ -411,6 +413,16 @@
         </Association>
         <ComplexType Name="usps_Role_Result">
           <Property Type="String" Name="RoleCode" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="usps_Customers_Result">
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="CustomerName" Nullable="false" />
+          <Property Type="String" Name="State" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="String" Name="ContactNumber" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CustomerPassword" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Role" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -518,6 +530,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usps_Customers" FunctionName="ECommerceModel.Store.usps_Customers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ECommerceModel.usps_Customers_Result">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="CustomerPassword" ColumnName="CustomerPassword" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

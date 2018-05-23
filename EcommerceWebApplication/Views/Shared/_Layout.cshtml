@@ -25,19 +25,22 @@
                 <div class="navbar-collapse collapse"> 
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
                         <li>@Html.ActionLink("Products", "Details", "ProductInfoes")</li>
-                        <li>@Html.ActionLink("Contact", "Index", "Home")</li>
+                        @*<li>@Html.ActionLink("Contact", "Index", "Home")</li>*@
                         <li>@Html.ActionLink("Signup", "Create", "Customers")</li>
                         <li>@Html.ActionLink("Login", "Login", "Customers")</li>
                         <li>@Html.ActionLink("Cart", "Cart", "ShoppingCart")</li>
                         <li>@Html.ActionLink("History", "Index", "OrderHistory")</li>
-                            @Html.Action("Index", "Roles");
+                        @Html.Action("Index", "Roles")
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li style="color:beige">Welcome @Session["name"]</li>
-                        
-                    </ul>
+                    <div class="navbar-right">
+                        <p class="navbar-text">Welcome @Session["name"]</p>
+                        @if (@Session["name"] != null)
+                        {
+                            <p class="navbar-text">Last Logged: @Session["LastLogin"]</p>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
