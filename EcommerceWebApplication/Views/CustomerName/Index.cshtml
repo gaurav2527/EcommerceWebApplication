@@ -1,0 +1,8 @@
+﻿@model IEnumerable<EcommerceWebApplication.Models.EF.Customer>
+
+@foreach (var item in Model)
+{
+    <li>(modelItem => item.CustomerName)</li>
+}
+
+

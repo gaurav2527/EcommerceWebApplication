@@ -20,6 +20,7 @@ namespace EcommerceWebApplication.Models
         public IEnumerable<Role> Role { get; set; } = new List<Role>();
 
 
+
         //public IEnumerable<MainLinkData> MainLinkData { get; set; } = new List<MainLinkData>();
 
         //public IEnumerable<ShoppingCart> OrderDetails { get; set; } = new List<ShoppingCart>();

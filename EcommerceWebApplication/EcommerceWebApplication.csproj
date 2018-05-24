@@ -153,6 +153,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RedirectingAction.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerNameController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\ErrorHandlerAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -166,6 +167,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\UserConstants.cs" />
+    <Compile Include="Models\CustomerViewModel.cs" />
     <Compile Include="Models\EF\Checkout.cs" />
     <Compile Include="Models\EF\Customer.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
@@ -295,8 +297,9 @@
     <Content Include="Views\Order\OrderDetails.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\OrderHistory\Index.cshtml" />
-    <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\LastLogin\Index.cshtml" />
+    <Content Include="Views\CustomerName\Index.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />

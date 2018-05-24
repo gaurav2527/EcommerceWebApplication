@@ -15,22 +15,29 @@ namespace EcommerceWebApplication.Controllers
     {
         // GET: Roles
         private ECommerce db = new ECommerce();
+        Customer customer = new Customer();
         public ActionResult Index()
         {
-            ProdutViewModel role = new ProdutViewModel();
-            role.Role = db.Roles.ToList();
-            var roleId = Session["Role"];
-            string username = Convert.ToString(Session["name"]);
-            //var results = Users();
-            return PartialView();
+            //ViewBag.CustomerName = new SelectList(db.Customers.)
+            return PartialView(db.Customers.ToList());
         }
 
-        /*private List<usps_Customers_Result> Users()
+       private List<usps_Customers_Result> Users()
         {
             using (ECommerce db = new ECommerce())
             {
                 return db.usps_Customers().ToList();
             }
-        }*/
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 }
