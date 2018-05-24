@@ -32,10 +32,8 @@ namespace EcommerceWebApplication.Controllers
         {
             return View();
         }
-
         // POST: Customers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CustomerName,State,Address,ContactNumber,email,CustomerPassword")] Customer customer)
@@ -53,7 +51,6 @@ namespace EcommerceWebApplication.Controllers
             }
             return View(customer);
         }
-
 
     public ActionResult Login()
         {
@@ -91,15 +88,6 @@ namespace EcommerceWebApplication.Controllers
                     db.CustomerLastLogins.Add(lastlogin);
                     db.SaveChanges();
                     return RedirectToAction("Cart", "ShoppingCart");
-
-                    //Implemented cookies concept
-                    //HttpCookie cookie = new HttpCookie("UserInfo");
-                    //cookie["Email"] = obj.email.ToString();
-                    //cookie["CustomerPassword"] = obj.CustomerPassword.ToString();
-                    //cookie.Expires = DateTime.Now.AddHours(1);
-                    //Response.Cookies.Add(cookie);
-                    //return RedirectToAction("Cart","ShoppingCart");
-                    //return RedirectToAction("Cart", "ShoppingCart");
                 }
                 }
             return View("Login");

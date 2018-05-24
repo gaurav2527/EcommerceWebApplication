@@ -18,16 +18,7 @@ namespace EcommerceWebApplication.Controllers
         Customer customer = new Customer();
         public ActionResult Index()
         {
-            //ViewBag.CustomerName = new SelectList(db.Customers.)
             return PartialView(db.Customers.ToList());
-        }
-
-       private List<usps_Customers_Result> Users()
-        {
-            using (ECommerce db = new ECommerce())
-            {
-                return db.usps_Customers().ToList();
-            }
         }
 
         protected override void Dispose(bool disposing)
@@ -38,6 +29,7 @@ namespace EcommerceWebApplication.Controllers
             }
             base.Dispose(disposing);
         }
-
     }
 }
+
+

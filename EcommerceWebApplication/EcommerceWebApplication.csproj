@@ -153,7 +153,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RedirectingAction.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CustomerNameController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\ErrorHandlerAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -163,6 +162,7 @@
     <Compile Include="Controllers\ProductInfoesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -298,8 +298,8 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\OrderHistory\Index.cshtml" />
     <Content Include="Views\LastLogin\Index.cshtml" />
-    <Content Include="Views\CustomerName\Index.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\UserInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />

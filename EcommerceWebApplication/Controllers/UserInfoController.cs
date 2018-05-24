@@ -10,13 +10,14 @@ using EcommerceWebApplication.Models.EF;
 
 namespace EcommerceWebApplication.Controllers
 {
-    public class CustomerNameController : Controller
+    public class UserInfoController : Controller
     {
-        private ECommerce customerName = new ECommerce();
-        // GET: CustomerName
+        // GET: UserInfo
+        private ECommerce db = new ECommerce();
         public ActionResult Index()
         {
-            return View(customerName.Customers.ToList());
+            Customer customer = new Customer();
+            return View(db.Customers.ToList());
         }
     }
 }
