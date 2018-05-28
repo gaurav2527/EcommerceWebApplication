@@ -39,7 +39,7 @@
           <Key>
             <PropertyRef Name="OrderID" />
           </Key>
-          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="OrderDate" Type="date" Nullable="false" />
         </EntityType>

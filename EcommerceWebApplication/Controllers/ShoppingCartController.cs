@@ -38,6 +38,7 @@ namespace EcommerceWebApplication.Controllers
             var quantity = Convert.ToInt16(form["Quantity"]);
             
             ShoppingCart cart = new ShoppingCart();
+            //Order order = new Order();
             try {
             ProductInfo objProductDetails = new ProductInfo();
             ////Customer customer = new Customer();
@@ -81,23 +82,28 @@ namespace EcommerceWebApplication.Controllers
                     {
                         if (obj != null)
                         {
+                         
                             foreach (Checkout item in obj)
                             {
                                 ShoppingCart cart = new ShoppingCart();
-
-                                DateTime localDate = DateTime.Now;
+                                
+                                //DateTime localDate = DateTime.Now;
                                 cart.CartId = item.CartId;
                                 cart.ProductName = item.ProductName;
                                 cart.Quantity = item.Quantity;
                                 decimal total = (item.Quantity * Convert.ToDecimal(item.Productprice));
                                 cart.TotalAmount = total;
-                                cart.OrderDate = localDate;
-
+                                cart.OrderDate = DateTime.Now;
                                 product.ShoppingCarts.Add(cart);
                                 product.SaveChanges();
                                 //lstCart.Add(cart);
                             }
 
+                            Order order = new Order();
+                            order.CustomerID = Convert.ToInt32(Session["CustomerID"]);
+                            order.OrderDate = DateTime.Now;
+                            product.Orders.Add(order);
+                            product.SaveChanges();
                         }
                     }
                     catch (Exception ex)

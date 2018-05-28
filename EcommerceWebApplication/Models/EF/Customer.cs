@@ -11,8 +11,7 @@ namespace EcommerceWebApplication.Models.EF
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,23 +22,11 @@ namespace EcommerceWebApplication.Models.EF
         }
     
         public int CustomerID { get; set; }
-        [Required]
-        [Display(Name = "Name")]
         public string CustomerName { get; set; }
-        [Required]
         public string State { get; set; }
         public string Address { get; set; }
-        [Required(ErrorMessage = "Please Enter Mobile No")]
-        [Display(Name = "Contact Number")]
-        [StringLength(10, ErrorMessage = "The Mobile must contains 10 characters", MinimumLength = 10)]
         public string ContactNumber { get; set; }
-        [Required(ErrorMessage = "Please Enter Email Address")]
-        [Display(Name = "Email")]
-        [RegularExpression(@"^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$",
-        ErrorMessage = "Please Enter Correct Email Address")]
         public string email { get; set; }
-        [Required]
-        [Display(Name = "Password")]
         public string CustomerPassword { get; set; }
         public int Role { get; set; }
     
