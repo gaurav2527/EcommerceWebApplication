@@ -63,5 +63,14 @@ namespace EcommerceWebApplication.Models.EF
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_Customers_Result>("usps_Customers");
         }
+    
+        public virtual ObjectResult<usps_UserLogInDetails_Result> usps_UserLogInDetails(Nullable<int> customerID)
+        {
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLogInDetails_Result>("usps_UserLogInDetails", customerIDParameter);
+        }
     }
 }

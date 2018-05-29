@@ -159,6 +159,9 @@
           <Parameter Name="CustomerID" Type="int" Mode="In" />
         </Function>
         <Function Name="usps_Role" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usps_UserLogInDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="ECommerceModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerLastLogin" EntityType="Self.CustomerLastLogin" Schema="dbo" store:Type="Tables" />
@@ -356,6 +359,9 @@
             <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
           <FunctionImport Name="usps_Customers" ReturnType="Collection(ECommerceModel.usps_Customers_Result)" />
+          <FunctionImport Name="usps_UserLogInDetails" ReturnType="Collection(ECommerceModel.usps_UserLogInDetails_Result)">
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="CustomerLastLogin">
           <Key>
@@ -418,6 +424,11 @@
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerName" Nullable="false" />
           </ComplexType>
+        <ComplexType Name="usps_UserLogInDetails_Result">
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="CustomerName" Nullable="false" />
+          <Property Type="DateTime" Name="LoginDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -530,6 +541,15 @@
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usps_UserLogInDetails" FunctionName="ECommerceModel.Store.usps_UserLogInDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ECommerceModel.usps_UserLogInDetails_Result">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="LoginDateTime" ColumnName="LoginDateTime" />
+              </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>

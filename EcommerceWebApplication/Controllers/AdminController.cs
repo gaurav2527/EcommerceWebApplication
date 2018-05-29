@@ -17,24 +17,41 @@ namespace EcommerceWebApplication.Controllers
         public ActionResult UserInfo(Customer model, FormCollection form)
         {
             //var customerId = form["customerid"];
-            var customerId = Convert.ToString(form["CustomerName"]);
+            int customerId = Convert.ToInt32(form["CustomerName"]);
+            TempData["customerid"] = customerId;
             int report = Convert.ToInt32(form["Type"]);
-            string fromdate = form["fromDate"];
-            string todate = form["toDate"];
-            if(report==1)
+            TempData["fromdate"] = form["fromDate"];
+            TempData["todate"] = form["toDate"];
+            TempData.Keep();
+            if (report == 1)
             {
-                
+                return RedirectToAction("lastlogin");
             }
-            return View();
+           else
+                return RedirectToAction("OrderDetails");
         }
 
-        private List<usps_LastUserLogin_Result> Customer(int CustomerID)
+        public ActionResult lastlogin()
+        {
+            int customerid = Convert.ToInt32(TempData["customerid"]);
+            DateTime fromDate = Convert.ToDateTime(TempData["fromdate"]);
+            DateTime todate = Convert.ToDateTime(TempData["todate"]);
+            var result = Customer(customerid);
+            return PartialView(result);
+        }
+
+        public ActionResult OrderDetails()
+        {
+            return PartialView();
+        }
+
+        private List<usps_UserLogInDetails_Result> Customer(int customerId)
         {
             using (ECommerce db = new ECommerce())
             {
-                return db.usps_LastUserLogin(CustomerID).ToList();
+                //return db.usps_UserLogInDetails(CustomerID).ToList();
+               return db.usps_UserLogInDetails(customerId).ToList();
             }
         }
-
     }
 }

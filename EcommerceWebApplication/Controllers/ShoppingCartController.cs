@@ -94,6 +94,7 @@ namespace EcommerceWebApplication.Controllers
                                 decimal total = (item.Quantity * Convert.ToDecimal(item.Productprice));
                                 cart.TotalAmount = total;
                                 cart.OrderDate = DateTime.Now;
+
                                 product.ShoppingCarts.Add(cart);
                                 product.SaveChanges();
                                 //lstCart.Add(cart);

@@ -222,6 +222,9 @@
     <Compile Include="Models\EF\usps_Role_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\usps_UserLogInDetails_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProdutViewModel.cs" />
     <Compile Include="Models\EF\Shopping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -298,13 +301,14 @@
     <Content Include="Views\Order\OrderDetails.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\OrderHistory\Index.cshtml" />
-    <Content Include="Views\LastLogin\Index.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\UserInfo\Index.cshtml" />
+    <Content Include="Views\Admin\UserInfo.cshtml" />
+    <Content Include="Views\logindetails\lastlogin.cshtml" />
+    <Content Include="Views\Admin\lastlogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
