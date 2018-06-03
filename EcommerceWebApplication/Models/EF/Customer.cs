@@ -19,6 +19,7 @@ namespace EcommerceWebApplication.Models.EF
         {
             this.Orders = new HashSet<Order>();
             this.CustomerLastLogins = new HashSet<CustomerLastLogin>();
+            this.ShoppingCarts = new HashSet<ShoppingCart>();
         }
     
         public int CustomerID { get; set; }
@@ -35,5 +36,7 @@ namespace EcommerceWebApplication.Models.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerLastLogin> CustomerLastLogins { get; set; }
         public virtual Role Role1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

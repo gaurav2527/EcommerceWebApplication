@@ -1,0 +1,55 @@
+﻿@model EcommerceWebApplication.Models.EF.UserLogin
+
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+
+@using (Html.BeginForm("Login", "Customers", FormMethod.Post))
+{
+    <fieldset>
+        <legend>Log In Account</legend>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @if (@ViewBag.Message != null)
+        {
+            <div style="border: 1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+        <table>
+            <tr>
+                <td>@Html.LabelFor(a => a.email)</td>
+                <td>@Html.TextBoxFor(a => a.email)</td>
+                <td>@Html.ValidationMessageFor(a => a.email)</td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(a => a.CustomerPassword)
+                </td>
+                <td>
+                    @Html.PasswordFor(a => a.CustomerPassword)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(a => a.CustomerPassword)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Login" />
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </fieldset>
+}
+
+
+
+
+

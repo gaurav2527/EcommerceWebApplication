@@ -1,61 +1,126 @@
 ﻿@model IEnumerable<EcommerceWebApplication.Models.EF.Customer>
-
 @{
-
     ViewBag.Title = "Index";
 }
 <div class="container">
     @*@Html.BeginForm("UserInfo", "Admin", FormMethod.Post)*@
-    <form method="post" action="@Url.Action("UserInfo","Admin")" class="row" style="margin-top: 15px">
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label for="sel1">User List:</label>
-            <select class="form-control" name="CustomerName" id="customer">
-                <option value="0">--Select User--</option>
-                @foreach (var item in Model)
-                {
-                    <option value="@item.CustomerID">@item.CustomerName</option>
-                }
-            </select>
-        </div>
-        <input type="hidden" id="customerid" name="customerid" value="customerId" />
-        <div class="form-group col-md-3">
-            <label for="sel1">Report Type:</label>
-            <select name="Type" class="form-control" id="sel1">
-                <option>Select Type</option>
-                <option value="1">Login Time</option>
-                <option value="2">Orders</option>
-            </select>
-        </div>
+    <form id="form" class="row" action="@Url.Action("CustomerLoginDetails","Admin")" style="margin-top: 15px">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="sel1">User List:</label>
+                <select class="form-control" name="CustomerName" id="customer">
+                    <option value="0">--Select User--</option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.CustomerID">@item.CustomerName</option>
+                    }
+                </select>
+            </div>
+            <input type="hidden" id="customerid" name="customerid" value="customerId" />
+            <div class="form-group col-md-3">
+                <label for="sel1">Report Type:</label>
+                <select name="Type" class="form-control" id="sel1">
+                    <option value="0">Select Type</option>
+                    <option value="1">Login Time</option>
+                    <option value="2">Orders</option>
+                </select>
+            </div>
 
-        <div class="form-group col-md-3">
-            <label for="sel1">Pick Date</label>
-            <div class="row">
-                <div class="col-md-6"><input type="date" name="fromDate"></div>
-                <div class="col-md-6"><input type="date" name="toDate"></div>
+            <div class="form-group col-md-3">
+                <label for="sel1">Pick Date</label>
+                <div class="row">
+                    <div class="col-md-6"><input type="date" name="fromDate" id="fromDate"></div>
+                    <div class="col-md-6"><input type="date" name="toDate" id="toDate"></div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <input type="submit" id="btn" value="submit" class="btn btn-primary" style="float:right; margin-top:15px">
             </div>
         </div>
+    </form>
 
-        <div class="form-group col-md-3">
-            <input type="submit" value="submit" class="btn btn-primary" style="float:right; margin-top:15px">
-        </div>
+    <div id="getresult" class="row col-md-6">
+
     </div>
-        </form>
 </div>
- 
-
 
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
-    $("#customer").on('change', function () {
-        @*var customerid = $(this).find('option:selected').val();*@
-        var customerId = $(this).text();
-        @*$('#customerid').val = customerId;*@
-        $('#customerid').val = customerId;
-    });
+        $("#btn").click(function () {
+            debugger
+            //grab all form data
+            //var dialogDiv = $('#getresult');
+            var tempUrl = '@Url.Action("CustomerLoginDetails", "Admin", null, "http")';
+            //var form = $("#form");
+            //var formdata = new FormData(form);
+            //var data;
+            //data = form.serialize();
+            //data = new FormData(form);
+            //var data = formdata.serialize();
+            //var url = form.attr("action");
+            //console.log(data);
+            var customerid = $('#customer').val();
+            debugger
+            var report = $('#sel1').val();
+            debugger
+            var fromdate = $('#fromDate').val();
+            debugger
+            var todate = $('#toDate').val();
+
+            var data = { "CustomerId": customerid, "Report": report, "FromDate": fromdate, "ToDate": todate };
+
+            debugger
+            $.get(tempUrl, data, function (response) {
+                debugger
+                $('#getresult').html(response);
+                console.log(response);
+                debugger
+            });
+        });
 </script>
 
+ @*$.ajax({
+                type: 'POST',
+                url: url,
+                dataType: 'text/html',
+                data: formdata,
+                error: (msg) => { console.log(msg) },
+                success: function (response) {
+                    if (response.status == "success") {
+                        $('#getresult').html();
+                        }
+                    },
+                });
+            });*@
+
+
+@* $.ajax({
+        url: tempUrl,
+        method: "POST",
+        data: data,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType: 'html',
+        success: function (result) {
+            if (result.status == "success") {
+                $("#getresult").html(result);
+            }
+        },
+        error: (msg) => { console.log(msg) },
+    });*@
+
+@*<script>
+        debugger
+        function OnSuccess(result) {
+            debugger
+            $('#getresult').html(result);
+        };
+
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+    </script>*@
 @*@Html.ActionLink(", "#", "#", new { customerId = item.CustomerID }, null)*@
 
 

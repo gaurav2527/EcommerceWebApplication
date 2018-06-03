@@ -1,0 +1,22 @@
+﻿@model List<EcommerceWebApplication.Models.EF.usps_UserLogInDetails_Result>
+
+
+@(Html.Kendo().Grid<EcommerceWebApplication.Models.EF.usps_UserLogInDetails_Result>()
+            .Name("grid")
+            .Columns(columns =>
+            {
+                columns.Bound(c => c.CustomerName);
+            })
+            .HtmlAttributes(new { style = "height: 550px;" })
+            .Scrollable()
+            .Groupable()
+            .Sortable()
+            .Pageable(pageable => pageable
+                .Refresh(true)
+                .PageSizes(true)
+                .ButtonCount(5))
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(20)
+            )
+)

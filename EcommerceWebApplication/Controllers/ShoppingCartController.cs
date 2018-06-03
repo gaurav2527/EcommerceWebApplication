@@ -8,6 +8,7 @@ using EcommerceWebApplication.Models;
 using EcommerceWebApplication.Models.EF;
 using Newtonsoft.Json;
 
+
 namespace EcommerceWebApplication.Controllers
 {
 
@@ -48,6 +49,7 @@ namespace EcommerceWebApplication.Controllers
                 objProductDetails = objEntity.ProductInfoes.Where(p => p.ProductID == productId).FirstOrDefault();
                 if (objProductDetails != null)
                   {
+                    
                     cart.ProductName = objProductDetails.ProductName;
                     cart.Quantity = quantity;
                     decimal v = (quantity * objProductDetails.ProductPrice);
@@ -88,13 +90,13 @@ namespace EcommerceWebApplication.Controllers
                                 ShoppingCart cart = new ShoppingCart();
                                 
                                 //DateTime localDate = DateTime.Now;
+                                cart.CustomerID = Convert.ToInt32(Session["CustomerID"]);
                                 cart.CartId = item.CartId;
                                 cart.ProductName = item.ProductName;
                                 cart.Quantity = item.Quantity;
                                 decimal total = (item.Quantity * Convert.ToDecimal(item.Productprice));
                                 cart.TotalAmount = total;
                                 cart.OrderDate = DateTime.Now;
-
                                 product.ShoppingCarts.Add(cart);
                                 product.SaveChanges();
                                 //lstCart.Add(cart);

@@ -19,5 +19,8 @@ namespace EcommerceWebApplication.Models.EF
         public decimal TotalAmount { get; set; }
         public string ProductName { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
+        public Nullable<int> CustomerID { get; set; }
+    
+        public virtual Customer Customer { get; set; }
     }
 }

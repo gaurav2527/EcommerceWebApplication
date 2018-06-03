@@ -10,6 +10,16 @@
     <link href="~/Style/StyleSheet1.css" rel="stylesheet" />
     
 
+	<!--This bundle was moved by the Telerik VS Extensions for compatibility reasons-->
+	@Scripts.Render("~/bundles/jquery")
+	<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.common-bootstrap.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.bootstrap.min.css")" rel="stylesheet" type="text/css" />
+	<script src="@Url.Content("~/Scripts/kendo/2018.2.516/jquery.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2018.2.516/jszip.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2018.2.516/kendo.all.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2018.2.516/kendo.aspnetmvc.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
 </head>
 <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -31,6 +41,7 @@
                         <li>@Html.ActionLink("Signup", "Create", "Customers")</li>
                         <li>@Html.ActionLink("Login", "Login", "Customers")</li>
                         <li>@Html.ActionLink("Cart", "Cart", "ShoppingCart")</li>
+                        @*<li>@Html.ActionLink("Practice", "Index", "practice")</li>*@
                         <li>@Html.ActionLink("History", "Index", "OrderHistory")</li>
                         @Html.Action("Index", "Roles")
                     </ul>
@@ -58,7 +69,7 @@
                 </div>
             </footer>
 
-                    @Scripts.Render("~/bundles/jquery")
+                    
                     @Scripts.Render("~/bundles/bootstrap")
                     @RenderSection("scripts", required: false)
 

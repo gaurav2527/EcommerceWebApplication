@@ -24,7 +24,7 @@
           </Key>
           <Property Name="LoginID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
-          <Property Name="LoginDateTime" Type="datetime" />
+          <Property Name="LoginDateTime" Type="date" />
         </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
@@ -79,6 +79,7 @@
           <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="OrderDate" Type="datetime" />
+          <Property Name="CustomerID" Type="int" />
         </EntityType>
         <Association Name="FK_Customer_Roles">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
@@ -154,6 +155,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ShoppingCart_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="usps_Customers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usps_LastUserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerID" Type="int" Mode="In" />
@@ -195,6 +208,10 @@
             <End Role="ProductCategory" EntitySet="ProductCategory" />
             <End Role="ProductInfo" EntitySet="ProductInfo" />
           </AssociationSet>
+          <AssociationSet Name="FK_ShoppingCart_Customer" Association="Self.FK_ShoppingCart_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -215,6 +232,7 @@
           <NavigationProperty Name="CustomerLastLogins" Relationship="ECommerceModel.FK_CustomerLastLogin_Customer" FromRole="Customer" ToRole="CustomerLastLogin" />
           <Property Name="Role" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Role1" Relationship="ECommerceModel.FK_Customer_Roles" FromRole="Customer" ToRole="Role" />
+          <NavigationProperty Name="ShoppingCarts" Relationship="ECommerceModel.FK_ShoppingCart_Customer" FromRole="Customer" ToRole="ShoppingCart" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -268,6 +286,8 @@
           <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="ProductName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="CustomerID" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="ECommerceModel.FK_ShoppingCart_Customer" FromRole="ShoppingCart" ToRole="Customer" />
         </EntityType>
         <Association Name="FK_Orders_Orders">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
@@ -360,8 +380,12 @@
           </AssociationSet>
           <FunctionImport Name="usps_Customers" ReturnType="Collection(ECommerceModel.usps_Customers_Result)" />
           <FunctionImport Name="usps_UserLogInDetails" ReturnType="Collection(ECommerceModel.usps_UserLogInDetails_Result)">
-            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          <Parameter Name="CustomerID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <AssociationSet Name="FK_ShoppingCart_Customer" Association="ECommerceModel.FK_ShoppingCart_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CustomerLastLogin">
           <Key>
@@ -369,7 +393,7 @@
           </Key>
           <Property Name="LoginID" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" />
-          <Property Name="LoginDateTime" Type="DateTime" Precision="3" />
+          <Property Name="LoginDateTime" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Customer" Relationship="ECommerceModel.FK_CustomerLastLogin_Customer" FromRole="CustomerLastLogin" ToRole="Customer" />
         </EntityType>
         <Association Name="FK_CustomerLastLogin_Customer">
@@ -429,6 +453,18 @@
           <Property Type="String" Name="CustomerName" Nullable="false" />
           <Property Type="DateTime" Name="LoginDateTime" Nullable="true" Precision="23" />
         </ComplexType>
+        <Association Name="FK_ShoppingCart_Customer">
+          <End Type="ECommerceModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="ECommerceModel.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -492,6 +528,7 @@
           <EntitySetMapping Name="ShoppingCarts">
             <EntityTypeMapping TypeName="ECommerceModel.ShoppingCart">
               <MappingFragment StoreEntitySet="ShoppingCart">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="CartId" ColumnName="CartId" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />

@@ -81,10 +81,10 @@ namespace EcommerceWebApplication.Controllers
                     Session["LastLogin"] = result.LoginDateTime.ToString();
 
                     //Store Last login Details of customer
-                    DateTime localDate = DateTime.Now;
+                   // DateTime localDate = DateTime.Now;
                     lastlogin.CustomerID = obj.CustomerID;
 
-                    lastlogin.LoginDateTime = localDate;
+                    lastlogin.LoginDateTime = DateTime.Now;
                     db.CustomerLastLogins.Add(lastlogin);
                     db.SaveChanges();
                     return RedirectToAction("Cart", "ShoppingCart");
