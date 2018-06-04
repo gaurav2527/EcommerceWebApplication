@@ -11,14 +11,15 @@
 
 @(Html.Kendo().Grid(Model)
 
-                                                        .Name("grid")
-                                                        .Columns(columns =>
-                                                        {
-                                                            columns.Bound(c => c.CustomerID);
-                                                            columns.Bound(c => c.CustomerName);
-                                                            columns.Bound(c => c.LoginDateTime);
-                                                        })
-                                                        .HtmlAttributes(new { style = "height: 550px;" })
+                                                            .Name("grid")
+                                                            .Columns(columns =>
+                                                            {
+                                                                columns.Bound(c => c.CustomerID);
+                                                                columns.Bound(c => c.CustomerName);
+                                                                columns.Bound(c => c.LoginDateTime);
+                                                            })
+                                                            .HtmlAttributes(new { style = "height: 550px;" })
 )
+
 
 

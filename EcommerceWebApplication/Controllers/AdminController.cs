@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using EcommerceWebApplication.Models.EF;
 using EcommerceWebApplication.Models;
+using System.Globalization;
 
 namespace EcommerceWebApplication.Controllers
 {
@@ -17,21 +18,30 @@ namespace EcommerceWebApplication.Controllers
         [HttpGet]
         public ActionResult CustomerLoginDetails(String CustomerId, String Report, String FromDate, String ToDate)
         {
-            int customerid = Int32.Parse(CustomerId);
-            int report = Int32.Parse(Report);
-            DateTime fromdate = Convert.ToDateTime(FromDate);
+            int customerid = Convert.ToInt32(CustomerId);
+            int report = Convert.ToInt32(Report);
+            DateTime fromdate = DateTime.Parse(FromDate);
             DateTime todate = DateTime.Parse(ToDate);
             var result = Customer(customerid);
             if (report == 1)
-                return PartialView(result);
+                return PartialView("getUserlastlogin", result);
             else
                 return RedirectToAction("CustomerIndex");
+            //return new EmptyResult();
         }
+    
 
         public ActionResult CustomerIndex()
         {
             return View();
         }
+
+       /* public ActionResult getUserlastlogin()
+        {
+            int customerid = Convert.ToInt32(TempData["CustomerId"]);
+            var result = Customer(customerid);
+            return PartialView(result);
+        }*/
 
         private List<usps_UserLogInDetails_Result> Customer(int customerid)
         {

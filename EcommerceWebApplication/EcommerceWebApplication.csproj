@@ -1060,7 +1060,7 @@
     <Content Include="Views\Shared\lastlogin.cshtml" />
     <Content Include="Views\LastLogin\UserLoginDetails.cshtml" />
     <Content Include="Views\Admin\CustomerInfo.cshtml" />
-    <Content Include="Views\Admin\CustomerLoginDetails.cshtml" />
+    <Content Include="Views\Admin\getUserlastlogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />

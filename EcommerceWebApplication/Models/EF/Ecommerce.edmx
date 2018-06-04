@@ -24,7 +24,7 @@
           </Key>
           <Property Name="LoginID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
-          <Property Name="LoginDateTime" Type="date" />
+          <Property Name="LoginDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
@@ -393,7 +393,7 @@
           </Key>
           <Property Name="LoginID" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" />
-          <Property Name="LoginDateTime" Type="DateTime" Precision="0" />
+          <Property Name="LoginDateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Customer" Relationship="ECommerceModel.FK_CustomerLastLogin_Customer" FromRole="CustomerLastLogin" ToRole="Customer" />
         </EntityType>
         <Association Name="FK_CustomerLastLogin_Customer">
