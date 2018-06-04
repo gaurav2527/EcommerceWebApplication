@@ -22,9 +22,11 @@ namespace EcommerceWebApplication.Controllers
             int report = Convert.ToInt32(Report);
             DateTime fromdate = DateTime.Parse(FromDate);
             DateTime todate = DateTime.Parse(ToDate);
-            var result = Customer(customerid);
+            var result = Customer(customerid, fromdate, todate);
             if (report == 1)
+            {
                 return PartialView("getUserlastlogin", result);
+            }
             else
                 return RedirectToAction("CustomerIndex");
             //return new EmptyResult();
@@ -43,12 +45,12 @@ namespace EcommerceWebApplication.Controllers
             return PartialView(result);
         }*/
 
-        private List<usps_UserLogInDetails_Result> Customer(int customerid)
+        private List<usps_UserLogInDetails_Result> Customer(int customerid, DateTime fromdate, DateTime todate)
         {
             using (ECommerce db = new ECommerce())
             {
                 //return db.usps_UserLogInDetails(CustomerID).ToList();
-                return db.usps_UserLogInDetails(customerid).ToList();
+                return db.usps_UserLogInDetails(customerid, fromdate, todate).ToList();
             }
         }
     }
