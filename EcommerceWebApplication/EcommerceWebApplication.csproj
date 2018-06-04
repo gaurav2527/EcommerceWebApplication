@@ -199,7 +199,6 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\ErrorHandlerAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LastLoginController.cs" />
     <Compile Include="Controllers\OrderHistoryController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\practiceController.cs" />
