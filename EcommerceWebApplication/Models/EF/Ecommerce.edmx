@@ -171,6 +171,11 @@
         <Function Name="usps_LastUserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerID" Type="int" Mode="In" />
         </Function>
+        <Function Name="usps_OrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+          <Parameter Name="fromDate" Type="datetime" Mode="In" />
+          <Parameter Name="toDate" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="usps_Role" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usps_UserLogInDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerID" Type="int" Mode="In" />
@@ -382,7 +387,7 @@
           </AssociationSet>
           <FunctionImport Name="usps_Customers" ReturnType="Collection(ECommerceModel.usps_Customers_Result)" />
           <FunctionImport Name="usps_UserLogInDetails" ReturnType="Collection(ECommerceModel.usps_UserLogInDetails_Result)">
-          <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
             <Parameter Name="fromDate" Mode="In" Type="DateTime" />
             <Parameter Name="toDate" Mode="In" Type="DateTime" />
           </FunctionImport>
@@ -390,6 +395,11 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
           </AssociationSet>
+          <FunctionImport Name="usps_OrderDetails" ReturnType="Collection(ECommerceModel.usps_OrderDetails_Result)">
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+            <Parameter Name="fromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="toDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="CustomerLastLogin">
           <Key>
@@ -469,6 +479,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="usps_OrderDetails_Result">
+          <Property Type="String" Name="ProductName" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Decimal" Name="TotalAmount" Nullable="false" Precision="18" Scale="3" />
+          <Property Type="DateTime" Name="OrderDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CustomerID" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -590,6 +607,17 @@
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="LoginDateTime" ColumnName="LoginDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usps_OrderDetails" FunctionName="ECommerceModel.Store.usps_OrderDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ECommerceModel.usps_OrderDetails_Result">
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

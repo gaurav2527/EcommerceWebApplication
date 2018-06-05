@@ -261,6 +261,9 @@
     <Compile Include="Models\EF\usps_LastUserLogin_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\usps_OrderDetails_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\usps_Role_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
@@ -1060,6 +1063,7 @@
     <Content Include="Views\LastLogin\UserLoginDetails.cshtml" />
     <Content Include="Views\Admin\CustomerInfo.cshtml" />
     <Content Include="Views\Admin\getUserlastlogin.cshtml" />
+    <Content Include="Views\Admin\getUserOrderInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />

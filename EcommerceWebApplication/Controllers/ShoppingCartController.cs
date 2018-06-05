@@ -54,8 +54,8 @@ namespace EcommerceWebApplication.Controllers
                     cart.Quantity = quantity;
                     decimal v = (quantity * objProductDetails.ProductPrice);
                     cart.TotalAmount = v;
-                    objEntity.ShoppingCarts.Add(cart);
-                    objEntity.SaveChanges();
+                    //objEntity.ShoppingCarts.Add(cart);
+                    //objEntity.SaveChanges();
                         //Store cart products in cookie//
                         //HttpCookie cookies = new HttpCookie("Product");
                         //cookies["Product"] = JsonConvert.SerializeObject(cart);
@@ -102,11 +102,11 @@ namespace EcommerceWebApplication.Controllers
                                 //lstCart.Add(cart);
                             }
 
-                            Order order = new Order();
+                            /*Order order = new Order();
                             order.CustomerID = Convert.ToInt32(Session["CustomerID"]);
                             order.OrderDate = DateTime.Now;
                             product.Orders.Add(order);
-                            product.SaveChanges();
+                            product.SaveChanges();*/
                         }
                     }
                     catch (Exception ex)

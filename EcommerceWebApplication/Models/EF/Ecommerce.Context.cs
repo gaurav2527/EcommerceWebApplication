@@ -80,5 +80,22 @@ namespace EcommerceWebApplication.Models.EF
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLogInDetails_Result>("usps_UserLogInDetails", customerIDParameter, fromDateParameter, toDateParameter);
         }
+    
+        public virtual ObjectResult<usps_OrderDetails_Result> usps_OrderDetails(Nullable<int> customerID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_OrderDetails_Result>("usps_OrderDetails", customerIDParameter, fromDateParameter, toDateParameter);
+        }
     }
 }

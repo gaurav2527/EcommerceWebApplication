@@ -22,29 +22,28 @@ namespace EcommerceWebApplication.Controllers
             int report = Convert.ToInt32(Report);
             DateTime fromdate = DateTime.Parse(FromDate);
             DateTime todate = DateTime.Parse(ToDate);
-            var result = Customer(customerid, fromdate, todate);
+            //var result = Customer(customerid, fromdate, todate);
             if (report == 1)
             {
+                var result = Customer(customerid, fromdate, todate);
                 return PartialView("getUserlastlogin", result);
+            }
+            else if (report == 2)
+            {
+                var userinfo = UserOrdersInfo(customerid, fromdate, todate);
+                return PartialView("getUserOrderInfo", userinfo);
             }
             else
                 return RedirectToAction("CustomerIndex");
             //return new EmptyResult();
         }
-    
 
         public ActionResult CustomerIndex()
         {
             return View();
         }
 
-       /* public ActionResult getUserlastlogin()
-        {
-            int customerid = Convert.ToInt32(TempData["CustomerId"]);
-            var result = Customer(customerid);
-            return PartialView(result);
-        }*/
-
+        //getting user login details using 
         private List<usps_UserLogInDetails_Result> Customer(int customerid, DateTime fromdate, DateTime todate)
         {
             using (ECommerce db = new ECommerce())
@@ -53,5 +52,21 @@ namespace EcommerceWebApplication.Controllers
                 return db.usps_UserLogInDetails(customerid, fromdate, todate).ToList();
             }
         }
+        
+        // getting order information of customers using stored procedures
+        private List<usps_OrderDetails_Result> UserOrdersInfo(int customerid, DateTime fromdate, DateTime todate)
+        {
+            using (ECommerce db = new ECommerce())
+            {
+                return db.usps_OrderDetails(customerid, fromdate, todate).ToList();
+            }
+        }
+
+        /* public ActionResult getUserlastlogin()
+         {
+             int customerid = Convert.ToInt32(TempData["CustomerId"]);
+             var result = Customer(customerid);
+             return PartialView(result);
+         }*/
     }
 }
