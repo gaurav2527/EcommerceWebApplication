@@ -40,7 +40,7 @@ namespace EcommerceWebApplication.Controllers
 
         public ActionResult CustomerIndex()
         {
-            return View();
+            return RedirectToAction("Index", "UserInfo");
         }
 
         //getting user login details using 
@@ -61,12 +61,5 @@ namespace EcommerceWebApplication.Controllers
                 return db.usps_OrderDetails(customerid, fromdate, todate).ToList();
             }
         }
-
-        /* public ActionResult getUserlastlogin()
-         {
-             int customerid = Convert.ToInt32(TempData["CustomerId"]);
-             var result = Customer(customerid);
-             return PartialView(result);
-         }*/
     }
 }

@@ -40,10 +40,10 @@
                 </div>
             </div>
         </form>
-
-        <div id="getresult" class="row col-md-6">
-
-        </div>
+    <div class="row">
+        <div id="getresult" class="col-md-6"> </div>
+        <div id="getorderinfo" class="col-md-6"> </div>
+    </div>
 </div>
 
 @Scripts.Render("~/bundles/jquery")
@@ -77,7 +77,10 @@
             debugger
             $.get(tempUrl, data, function (response) {
                 debugger
-                $('#getresult').html(response);
+                if (report == 1)
+                    $('#getresult').html(response);
+                if (report==2)
+                    $('#getorderinfo').html(response);
                 console.log(response);
                 debugger
             });
