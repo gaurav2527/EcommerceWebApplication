@@ -83,8 +83,12 @@ namespace EcommerceWebApplication.Controllers
                     //Store Last login Details of customer
                    // DateTime localDate = DateTime.Now;
                     lastlogin.CustomerID = obj.CustomerID;
+                    
+                    //lastlogin.LoginDateTime = DateTime.Now;
+                    var dbDate = DateTime.Now;
+                    var udate = dbDate.ToUniversalTime();
+                    lastlogin.LoginDateTime = udate;
 
-                    lastlogin.LoginDateTime = DateTime.Now;
                     db.CustomerLastLogins.Add(lastlogin);
                     db.SaveChanges();
                     return RedirectToAction("Cart", "ShoppingCart");

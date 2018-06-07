@@ -49,7 +49,6 @@ namespace EcommerceWebApplication.Controllers
                 objProductDetails = objEntity.ProductInfoes.Where(p => p.ProductID == productId).FirstOrDefault();
                 if (objProductDetails != null)
                   {
-                    
                     cart.ProductName = objProductDetails.ProductName;
                     cart.Quantity = quantity;
                     decimal v = (quantity * objProductDetails.ProductPrice);

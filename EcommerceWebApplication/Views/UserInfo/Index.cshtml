@@ -33,6 +33,7 @@
                     <option value="0">Select Type</option>
                     <option value="1">Login Time</option>
                     <option value="2">Orders</option>
+                    <option value="3">Users</option>
                 </select>
             </div>
 
@@ -105,14 +106,14 @@
             $.get(tempUrl, data, function (response) {
                 debugger
                 //if (report == 1)
-                    $('#getresult').html(response);
-                //if (report==2)
-                    //$('#getorderinfo').html(response);
-                //console.log(response);
+                $('#getresult').html(response);
+                dataSource.read();
+                grid.setDataSource(dataSource);
                 debugger
             });
         });
 </script>
+
 
 @*$.ajax({
         type: 'POST',

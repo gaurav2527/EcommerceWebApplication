@@ -21,19 +21,12 @@ namespace EcommerceWebApplication.Controllers
         [HttpGet]
         public ActionResult CustomerLoginDetails(string CustomerId, String Report, String FromDate, String ToDate)
         {
-            //var customerid = CustomerId;
-            //String[] Customerid = 
-            int customerid = 1;
-            //List<int> customerid = new List<int>();
-            //for(int i=0; i<CustomerId.Count; i++)
-            //{
-            //   customerid.Add(Convert.ToInt32(CustomerId[i]));
-            //}
-            //List<int> customerID = CustomerId.ConvertAll<int>(Convert.ToInt32);
-            //string customerdd = CustomerId.Replace("\","");
             int report = Convert.ToInt32(Report);
+            TempData["CustomerId"] = CustomerId;
             DateTime fromdate = DateTime.Parse(FromDate);
+            TempData["fromdate"] = fromdate;
             DateTime todate = DateTime.Parse(ToDate);
+            TempData["todate"] = todate;
             if (report == 1)
             {
                 var result = Customer(CustomerId, fromdate, todate);
@@ -43,6 +36,10 @@ namespace EcommerceWebApplication.Controllers
             {
                 var userinfo = UserOrdersInfo(CustomerId, fromdate, todate);
                 return PartialView("getUserOrderInfo", userinfo);
+            }
+            else if (report == 3)
+            {
+                return RedirectToAction("Index");
             }
             else
                 return RedirectToAction("CustomerIndex");
@@ -72,11 +69,11 @@ namespace EcommerceWebApplication.Controllers
                 return db.usps_OrderDetails(CustomerId, fromdate, todate).ToList();
             }
         }
-
-        public ActionResult Customers_Read([DataSourceRequest]DataSourceRequest request, string CustomerId, DateTime fromdate, DateTime todate)
+        //DateTime fromdate = TempData["fromdate"];
+        public ActionResult Customers_Read([DataSourceRequest]DataSourceRequest request, DateTime fromDate, DateTime toDate, String CustomerId)
         {
-            var customerList = Customer(CustomerId, fromdate, todate);
-            return Json(customerList.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+                var customerList = Customer(CustomerId, fromDate, toDate);
+                return Json(customerList.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
     }
 }
