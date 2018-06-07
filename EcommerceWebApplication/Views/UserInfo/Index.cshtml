@@ -2,53 +2,65 @@
 @{
     ViewBag.Title = "Index";
 }
+
+@Scripts.Render("~/bundles/jquery")
+@*<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+@*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>*@
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="~/Content/bootstrap-multiselect.css" type="text/css">
+
 <div class="container">
     @*@Html.BeginForm("UserInfo", "Admin", FormMethod.Post)*@
     <form id="form" class="row" action="@Url.Action("CustomerLoginDetails","Admin")" style="margin-top: 15px">
-       
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="sel1">User List:</label>
-                    <select class="form-control" name="CustomerName" id="customer">
-                        <option value="0">--Select User--</option>
-                        @foreach (var item in Model)
-                     {
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="sel1">User List:</label>
+                <select class="form-control" name="CustomerName" id="customer" multiple="multiple">
+                    <option value="0">--Select User--</option>
+                    @foreach (var item in Model)
+                    {
                         <option value="@item.CustomerID">@item.CustomerName</option>
-                     }
-                    </select>
-                </div>
-                <input type="hidden" id="customerid" name="customerid" value="customerId" />
-                <div class="form-group col-md-3">
-                    <label for="sel1">Report Type:</label>
-                    <select name="Type" class="form-control" id="sel1">
-                        <option value="0">Select Type</option>
-                        <option value="1">Login Time</option>
-                        <option value="2">Orders</option>
-                    </select>
-                </div>
+                    }
+                </select>
+            </div>
+            <input type="hidden" id="customerid" name="customerid" value="customerId" />
+            <div class="form-group col-md-3">
+                <label for="sel1">Report Type:</label>
+                <select name="Type" class="form-control" id="sel1">
+                    <option value="0">Select Type</option>
+                    <option value="1">Login Time</option>
+                    <option value="2">Orders</option>
+                </select>
+            </div>
 
-                <div class="form-group col-md-3">
-                    <label for="sel1">Pick Date</label>
-                    <div class="row">
-                        <div class="col-md-6"><input type="date" name="fromDate" id="fromDate"></div>
-                        <div class="col-md-6"><input type="date" name="toDate" id="toDate"></div>
-                    </div>
-                </div>
-
-                <div class="form-group col-md-3">
-                    <input type="submit" id="btn" value="submit" class="btn btn-primary" style="float:right; margin-top:15px">
+            <div class="form-group col-md-3">
+                <label for="sel1">Pick Date</label>
+                <div class="row">
+                    <div class="col-md-6"><input type="date" name="fromDate" id="fromDate"></div>
+                    <div class="col-md-6"><input type="date" name="toDate" id="toDate"></div>
                 </div>
             </div>
-        </form>
+
+            <div class="form-group col-md-3">
+                <input type="submit" id="btn" value="submit" class="btn btn-primary" style="float:right; margin-top:15px">
+            </div>
+        </div>
+    </form>
     <div class="row">
         <div id="getresult" class="col-md-6"> </div>
         <div id="getorderinfo" class="col-md-6"> </div>
     </div>
 </div>
 
-@Scripts.Render("~/bundles/jquery")
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
+    $(document).ready(function () {
+        debugger
+        $('#customer').multiselect();
+    });
+
         $("#btn").click(function (event) {
             debugger
             event.preventDefault();
@@ -63,7 +75,10 @@
             //var data = formdata.serialize();
             //var url = form.attr("action");
             //console.log(data);
-            var customerid = $('#customer').val();
+            var customerid = new Array();
+            customerid = $('#customer').val();
+            //var customerID = JSON.stringify(customerid);
+            customerid = customerid.join(",")
             debugger
             var report = $('#sel1').val();
             debugger
@@ -72,34 +87,46 @@
             var todate = $('#toDate').val();
             debugger
             //var data = { "CustomerId": customerid, "Report": report};
-            var data = { "CustomerId": customerid, "Report": report, "FromDate": fromdate, "ToDate": todate };
-
+            var data = {
+                "CustomerId": customerid, "Report": report, "FromDate": fromdate, "ToDate": todate
+            };
             debugger
+
+       /* $.ajax({
+            type: 'GET',
+            url: tempUrl,
+            dataType: 'JSON',
+            data: data,
+            traditional: true,
+            success: function (response) {
+                $('#getresult').html(response);
+                },
+    });*/
             $.get(tempUrl, data, function (response) {
                 debugger
-                if (report == 1)
+                //if (report == 1)
                     $('#getresult').html(response);
-                if (report==2)
-                    $('#getorderinfo').html(response);
-                console.log(response);
+                //if (report==2)
+                    //$('#getorderinfo').html(response);
+                //console.log(response);
                 debugger
             });
         });
 </script>
 
- @*$.ajax({
-                type: 'POST',
-                url: url,
-                dataType: 'text/html',
-                data: formdata,
-                error: (msg) => { console.log(msg) },
-                success: function (response) {
-                    if (response.status == "success") {
-                        $('#getresult').html();
-                        }
-                    },
-                });
-            });*@
+@*$.ajax({
+        type: 'POST',
+        url: url,
+        dataType: 'text/html',
+        data: formdata,
+        error: (msg) => { console.log(msg) },
+        success: function (response) {
+            if (response.status == "success") {
+                $('#getresult').html();
+                }
+            },
+        });
+    });*@
 
 
 @* $.ajax({

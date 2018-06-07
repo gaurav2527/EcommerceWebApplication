@@ -64,11 +64,11 @@ namespace EcommerceWebApplication.Models.EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_Customers_Result>("usps_Customers");
         }
     
-        public virtual ObjectResult<usps_UserLogInDetails_Result> usps_UserLogInDetails(Nullable<int> customerID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        public virtual ObjectResult<usps_UserLogInDetails_Result> usps_UserLogInDetails(string customerList, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
         {
-            var customerIDParameter = customerID.HasValue ?
-                new ObjectParameter("CustomerID", customerID) :
-                new ObjectParameter("CustomerID", typeof(int));
+            var customerListParameter = customerList != null ?
+                new ObjectParameter("CustomerList", customerList) :
+                new ObjectParameter("CustomerList", typeof(string));
     
             var fromDateParameter = fromDate.HasValue ?
                 new ObjectParameter("fromDate", fromDate) :
@@ -78,14 +78,14 @@ namespace EcommerceWebApplication.Models.EF
                 new ObjectParameter("toDate", toDate) :
                 new ObjectParameter("toDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLogInDetails_Result>("usps_UserLogInDetails", customerIDParameter, fromDateParameter, toDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLogInDetails_Result>("usps_UserLogInDetails", customerListParameter, fromDateParameter, toDateParameter);
         }
     
-        public virtual ObjectResult<usps_OrderDetails_Result> usps_OrderDetails(Nullable<int> customerID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        public virtual ObjectResult<usps_OrderDetails_Result> usps_OrderDetails(string customerList, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
         {
-            var customerIDParameter = customerID.HasValue ?
-                new ObjectParameter("CustomerID", customerID) :
-                new ObjectParameter("CustomerID", typeof(int));
+            var customerListParameter = customerList != null ?
+                new ObjectParameter("CustomerList", customerList) :
+                new ObjectParameter("CustomerList", typeof(string));
     
             var fromDateParameter = fromDate.HasValue ?
                 new ObjectParameter("fromDate", fromDate) :
@@ -95,7 +95,21 @@ namespace EcommerceWebApplication.Models.EF
                 new ObjectParameter("toDate", toDate) :
                 new ObjectParameter("toDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_OrderDetails_Result>("usps_OrderDetails", customerIDParameter, fromDateParameter, toDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_OrderDetails_Result>("usps_OrderDetails", customerListParameter, fromDateParameter, toDateParameter);
+        }
+    
+        [DbFunction("ECommerce", "splitintotable")]
+        public virtual IQueryable<splitintotable_Result> splitintotable(string arg, string delimiter)
+        {
+            var argParameter = arg != null ?
+                new ObjectParameter("arg", arg) :
+                new ObjectParameter("arg", typeof(string));
+    
+            var delimiterParameter = delimiter != null ?
+                new ObjectParameter("delimiter", delimiter) :
+                new ObjectParameter("delimiter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<splitintotable_Result>("[ECommerce].[splitintotable](@arg, @delimiter)", argParameter, delimiterParameter);
         }
     }
 }
