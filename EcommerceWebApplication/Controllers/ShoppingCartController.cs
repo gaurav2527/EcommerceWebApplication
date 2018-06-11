@@ -34,7 +34,6 @@ namespace EcommerceWebApplication.Controllers
        [RedirectingAction]
         public ActionResult Cart(ProdutViewModel model, FormCollection form)
         {
-           
             var productId = Convert.ToInt16(form["productId"]);
             var quantity = Convert.ToInt16(form["Quantity"]);
             

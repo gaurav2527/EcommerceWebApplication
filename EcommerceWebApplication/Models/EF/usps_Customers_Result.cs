@@ -16,5 +16,6 @@ namespace EcommerceWebApplication.Models.EF
         public string CustomerName { get; set; }
         public string email { get; set; }
         public string CustomerPassword { get; set; }
+        public int CustomerID { get; set; }
     }
 }

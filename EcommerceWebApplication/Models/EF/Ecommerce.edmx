@@ -478,6 +478,7 @@
           <Property Type="String" Name="CustomerName" Nullable="false" />
           <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CustomerPassword" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
           </ComplexType>
         <ComplexType Name="usps_UserLogInDetails_Result">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
@@ -620,6 +621,7 @@
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="CustomerPassword" ColumnName="CustomerPassword" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

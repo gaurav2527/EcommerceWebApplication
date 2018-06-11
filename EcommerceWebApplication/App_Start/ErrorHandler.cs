@@ -5,7 +5,6 @@ namespace EcommerceWebApplication.Controllers
 {
     public class ErrorHandler : IExceptionFilter
     {
-        
          public void OnException(ExceptionContext filterContext)
         {
             filterContext.ExceptionHandled = true;

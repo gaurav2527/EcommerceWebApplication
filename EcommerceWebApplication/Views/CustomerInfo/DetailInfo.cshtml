@@ -13,23 +13,29 @@
                 .Name("grid")
                 .Columns(columns =>
                 {
-
-                    columns.Bound(p => p.CustomerName);
-                    columns.Bound(p => p.email);
-                    columns.Bound(p => p.CustomerPassword);
+                    columns.Bound(p => p.CustomerName).Width(120);
+                    columns.Bound(p => p.email).Width(120);
+                    columns.Bound(p => p.CustomerPassword).Width(120);
+                    columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
                 })
                   .ToolBar(toolbar => toolbar.Create())
+                  .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                  .Pageable()
+                  .Sortable()
+                  .Scrollable()
                   .HtmlAttributes(new { style = "height: 550px;" })
                   .Scrollable()
-                  .Groupable()
-                  .Sortable()
                   .DataSource(dataSource => dataSource
-                  .Server()
-                  .Model(model => model.Id(o => o.CustomerID))
-                  .Create(create => create.Action("Create", "Grid"))
-                  .Read(read => read.Action("Index", "Grid"))
-                  .Update(update => update.Action("Edit", "Grid"))
-                  .Destroy(destroy => destroy.Action("Delete", "Grid"))
-                  .Read(read => read.Action("user_Read", "CustomerInfo"))
+                  .Ajax()
+                  .Model(model => model.Id(p => p.CustomerID))
+                  .Model(model =>
+                  {
+                      model.Id(c => c.CustomerID); // Specify the property which is the unique identifier of the model.
+                      model.Field(c => c.CustomerID).Editable(false); // Make the CustomerID property not editable.
+                  })
+                  .Create(update => update.Action("Customer_Create", "CustomerInfo"))
+                  .Read(read => read.Action("Customer_Read", "CustomerInfo"))
+                  .Update(update => update.Action("Customer_Update", "CustomerInfo"))
+                  .Destroy(update => update.Action("Customer_Destroy", "CustomerInfo"))
                 )
                 )
