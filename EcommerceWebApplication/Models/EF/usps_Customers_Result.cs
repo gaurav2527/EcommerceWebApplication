@@ -13,7 +13,8 @@ namespace EcommerceWebApplication.Models.EF
     
     public partial class usps_Customers_Result
     {
-        public int CustomerID { get; set; }
         public string CustomerName { get; set; }
+        public string email { get; set; }
+        public string CustomerPassword { get; set; }
     }
 }

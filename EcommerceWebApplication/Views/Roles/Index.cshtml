@@ -1,19 +1,6 @@
 ﻿@model IEnumerable<EcommerceWebApplication.Models.EF.Customer>
-
 @if (Convert.ToInt32(Session["Role"]) == Convert.ToInt32(UserConstants.Role.Admin))
 {
     <li>@Html.ActionLink("Admin","Index", "UserInfo")</li>
 }
-
-
-
-@*<ul class="dropdown-menu">
-        @foreach (var item in Model)
-    {
-        <li style="padding: 12px 16px">@item.CustomerName</li>
-
-
-        }
-    </ul>
-*@
 

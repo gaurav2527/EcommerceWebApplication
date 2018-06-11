@@ -34,16 +34,26 @@ namespace EcommerceWebApplication.Controllers
             }
            else if (report == 2)
             {
-                var userinfo = UserOrdersInfo(CustomerId, fromdate, todate);
-                return PartialView("getUserOrderInfo", userinfo);
+                var customerinfo = UserOrdersInfo(CustomerId, fromdate, todate);
+                return PartialView("getUserOrderInfo", customerinfo);
             }
             else if (report == 3)
             {
-                return RedirectToAction("Index");
+                var userinfo = UserDetails();
+                return RedirectToAction("Index", userinfo);
             }
             else
                 return RedirectToAction("CustomerIndex");
             //return new EmptyResult();
+        }
+
+        // Getting usrname, email and password
+        private List<usps_Customers_Result> UserDetails()
+        {
+            using (ECommerce db = new ECommerce())
+            {
+                return db.usps_Customers().ToList();
+            }
         }
 
         public ActionResult CustomerIndex()
@@ -62,13 +72,14 @@ namespace EcommerceWebApplication.Controllers
         }
         
         // getting order information of customers using stored procedures
-       private List<usps_OrderDetails_Result> UserOrdersInfo(string CustomerId, DateTime fromdate, DateTime todate)
+        private List<usps_OrderDetails_Result> UserOrdersInfo(string CustomerId, DateTime fromdate, DateTime todate)
         {
             using (ECommerce db = new ECommerce())
             {
                 return db.usps_OrderDetails(CustomerId, fromdate, todate).ToList();
             }
         }
+
         //DateTime fromdate = TempData["fromdate"];
         public ActionResult Customers_Read([DataSourceRequest]DataSourceRequest request, DateTime fromDate, DateTime toDate, String CustomerId)
         {

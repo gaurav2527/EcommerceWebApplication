@@ -475,8 +475,9 @@
           <Property Type="String" Name="RoleCode" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="usps_Customers_Result">
-          <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerName" Nullable="false" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CustomerPassword" Nullable="true" MaxLength="50" />
           </ComplexType>
         <ComplexType Name="usps_UserLogInDetails_Result">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
@@ -616,8 +617,9 @@
           <FunctionImportMapping FunctionImportName="usps_Customers" FunctionName="ECommerceModel.Store.usps_Customers">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ECommerceModel.usps_Customers_Result">
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="CustomerPassword" ColumnName="CustomerPassword" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -16,7 +16,7 @@
     @*@Html.BeginForm("UserInfo", "Admin", FormMethod.Post)*@
     <form id="form" class="row" action="@Url.Action("CustomerLoginDetails","Admin")" style="margin-top: 15px">
         <div class="form-row">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
                 <label for="sel1">User List:</label>
                 <select class="form-control" name="CustomerName" id="customer" multiple="multiple">
                     <option value="0">--Select User--</option>
@@ -27,7 +27,7 @@
                 </select>
             </div>
             <input type="hidden" id="customerid" name="customerid" value="customerId" />
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
                 <label for="sel1">Report Type:</label>
                 <select name="Type" class="form-control" id="sel1">
                     <option value="0">Select Type</option>
@@ -36,7 +36,6 @@
                     <option value="3">Users</option>
                 </select>
             </div>
-
             <div class="form-group col-md-3">
                 <label for="sel1">Pick Date</label>
                 <div class="row">
@@ -50,6 +49,17 @@
             </div>
         </div>
     </form>
+
+    <div class="row">
+           @Html.ActionLink("Users","DetailInfo", "CustomerInfo")
+    </div>
+    @*<div class="row">
+             @Html.Action("UserInformation", "UserList")
+         </div>
+        @*<div class="row" id="userlist">
+             @Html.Action("Index", "UserList")
+         </div>*@
+
     <div class="row">
         <div id="getresult" class="col-md-6"> </div>
         <div id="getorderinfo" class="col-md-6"> </div>
