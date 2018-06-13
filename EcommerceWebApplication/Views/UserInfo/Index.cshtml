@@ -58,7 +58,8 @@
                 <select name="month" id="month">
                     <option value="0">Select Type</option>
                     <option value="1">Monthly</option>
-                    <option value="2">Yearly</option>
+                    <option value="2">Weekly</option>
+                    <option value="3">Last Hour</option>
                 </select>
             </div>
             </div>
@@ -70,7 +71,7 @@
              @Html.Action("Index", "UserList")
          </div>*@
 
-        <div class="row">
+        <div class="row" style="padding-top: 5px">
             <div id="getresult" class="col-md-6"> </div>
         </div>
     </div>
@@ -87,8 +88,8 @@
         $.get(tempUrl, data, function (response) {
             debugger
             $('#getresult').html(response);
-            dataSource.read();
-            grid.setDataSource(dataSource);
+            //dataSource.read();
+            //grid.setDataSource(dataSource);
             debugger
         });
     });

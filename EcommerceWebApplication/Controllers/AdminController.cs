@@ -58,7 +58,13 @@ namespace EcommerceWebApplication.Controllers
             }
             else if(value == 2)
             {
-                return PartialView();
+                var result = LoginWeeks();
+                return PartialView("_getUserWeeklyLogin", result);
+            }
+            else if (value == 3)
+            {
+                var result = LastHourLogin();
+                return PartialView("_getUserLastHourLogin", result);
             }
             else
                 return RedirectToAction("CustomerIndex");
@@ -70,6 +76,24 @@ namespace EcommerceWebApplication.Controllers
             using (ECommerce db = new ECommerce())
             {
                 return db.usps_UserHours().ToList();
+            }
+        }
+
+        //Getting number of logins in weeks
+        private List<usps_UserLoginByWeeks_Result> LoginWeeks()
+        {
+            using (ECommerce db = new ECommerce())
+            {
+                return db.usps_UserLoginByWeeks().ToList();
+            }
+        }
+
+        //Getting number of Logins in last one hour
+      private List<usps_UserLoginByHours_Result> LastHourLogin()
+        {
+            using (ECommerce db = new ECommerce())
+            {
+                return db.usps_UserLoginByHours().ToList();
             }
         }
 
@@ -125,6 +149,19 @@ namespace EcommerceWebApplication.Controllers
         public ActionResult MonthlyLogins_Read([DataSourceRequest]DataSourceRequest request)
         {
             var result = LoginMonths();
+            return Json(result.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+
+        //Read function for Weekly logins
+        public ActionResult WeeklyLogins_Read([DataSourceRequest]DataSourceRequest request)
+        {
+            var result = LoginWeeks();
+            return Json(result.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LastHourLogins_Read([DataSourceRequest]DataSourceRequest request)
+        {
+            var result = LastHourLogin();
             return Json(result.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
     }

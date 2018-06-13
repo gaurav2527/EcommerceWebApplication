@@ -117,5 +117,15 @@ namespace EcommerceWebApplication.Models.EF
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserHours_Result>("usps_UserHours");
         }
+    
+        public virtual ObjectResult<usps_UserLoginByWeeks_Result> usps_UserLoginByWeeks()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLoginByWeeks_Result>("usps_UserLoginByWeeks");
+        }
+    
+        public virtual ObjectResult<usps_UserLoginByHours_Result> usps_UserLoginByHours()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLoginByHours_Result>("usps_UserLoginByHours");
+        }
     }
 }

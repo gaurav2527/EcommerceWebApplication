@@ -200,6 +200,8 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
         </Function>
         <Function Name="usps_Role" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usps_UserHours" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usps_UserLoginByHours" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usps_UserLoginByWeeks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usps_UserLogInDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerList" Type="varchar" Mode="In" />
           <Parameter Name="fromDate" Type="datetime" Mode="In" />
@@ -435,6 +437,8 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
           </FunctionImport>
           <EntitySet Name="DropDownCategories" EntityType="ECommerceModel.DropDownCategory" />
           <FunctionImport Name="usps_UserHours" ReturnType="Collection(ECommerceModel.usps_UserHours_Result)" />
+          <FunctionImport Name="usps_UserLoginByWeeks" ReturnType="Collection(ECommerceModel.usps_UserLoginByWeeks_Result)" />
+          <FunctionImport Name="usps_UserLoginByHours" ReturnType="Collection(ECommerceModel.usps_UserLoginByHours_Result)" />
         </EntityContainer>
         <EntityType Name="CustomerLastLogin">
           <Key>
@@ -537,6 +541,17 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
         </EntityType>
         <ComplexType Name="usps_UserHours_Result">
           <Property Type="String" Name="MONTH" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="CustomerName" Nullable="false" />
+          <Property Type="Int32" Name="userlogins" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="usps_UserLoginByWeeks_Result">
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="CustomerName" Nullable="false" />
+          <Property Type="Int32" Name="userlogins" Nullable="true" />
+          <Property Type="Int32" Name="WEEKS" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="usps_UserLoginByHours_Result">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerName" Nullable="false" />
           <Property Type="Int32" Name="userlogins" Nullable="true" />
@@ -698,6 +713,25 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
             <ResultMapping>
               <ComplexTypeMapping TypeName="ECommerceModel.usps_UserHours_Result">
                 <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="userlogins" ColumnName="userlogins" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usps_UserLoginByWeeks" FunctionName="ECommerceModel.Store.usps_UserLoginByWeeks">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ECommerceModel.usps_UserLoginByWeeks_Result">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="userlogins" ColumnName="userlogins" />
+                <ScalarProperty Name="WEEKS" ColumnName="WEEKS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usps_UserLoginByHours" FunctionName="ECommerceModel.Store.usps_UserLoginByHours">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ECommerceModel.usps_UserLoginByHours_Result">
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="userlogins" ColumnName="userlogins" />
