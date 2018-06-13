@@ -20,6 +20,7 @@
         <EntityTypeShape EntityType="ECommerceModel.Role" Width="1.5" PointX="0.75" PointY="9.625" />
         <AssociationConnector Association="ECommerceModel.FK_Customer_Roles" />
         <AssociationConnector Association="ECommerceModel.FK_ShoppingCart_Customer" />
+        <EntityTypeShape EntityType="ECommerceModel.DropDownCategory" Width="1.5" PointX="7.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

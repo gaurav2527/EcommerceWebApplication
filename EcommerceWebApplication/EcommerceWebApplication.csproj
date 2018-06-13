@@ -202,7 +202,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderHistoryController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
-    <Compile Include="Controllers\practiceController.cs" />
     <Compile Include="Controllers\ProductInfoesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
@@ -218,6 +217,9 @@
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\CustomerLastLogin.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\DropDownCategory.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Ecommerce.Context.cs">
@@ -270,6 +272,9 @@
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\usps_Role_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\usps_UserHours_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\usps_UserLogInDetails_Result.cs">
@@ -1069,13 +1074,14 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
-    <Content Include="Views\practice\Index.cshtml" />
     <Content Include="Views\Shared\lastlogin.cshtml" />
     <Content Include="Views\LastLogin\UserLoginDetails.cshtml" />
     <Content Include="Views\Admin\CustomerInfo.cshtml" />
     <Content Include="Views\Admin\getUserlastlogin.cshtml" />
     <Content Include="Views\Admin\getUserOrderInfo.cshtml" />
     <Content Include="Views\CustomerInfo\DetailInfo.cshtml" />
+    <Content Include="Views\Admin\_CustomerInfo.cshtml" />
+    <Content Include="Views\Admin\_getUserMonthlyLogins.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />

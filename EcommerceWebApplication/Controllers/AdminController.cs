@@ -46,6 +46,32 @@ namespace EcommerceWebApplication.Controllers
                 return RedirectToAction("CustomerIndex");
             //return new EmptyResult();
         }
+        //Getting monthly logins of User
+        [HttpGet]
+        public ActionResult _UserMonthInfo(string Month)
+        {
+            int value = Convert.ToInt32(Month);
+            if(value == 1)
+            {
+                var result = LoginMonths();
+                return PartialView("_getUserMonthlyLogins",result);
+            }
+            else if(value == 2)
+            {
+                return PartialView();
+            }
+            else
+                return RedirectToAction("CustomerIndex");
+        }
+
+        //Getting number of logins in months
+        private List<usps_UserHours_Result> LoginMonths()
+        {
+            using (ECommerce db = new ECommerce())
+            {
+                return db.usps_UserHours().ToList();
+            }
+        }
 
         // Getting usrname, email and password
         private List<usps_Customers_Result> UserDetails()
@@ -59,6 +85,14 @@ namespace EcommerceWebApplication.Controllers
         public ActionResult CustomerIndex()
         {
             return RedirectToAction("Index", "UserInfo");
+        }
+
+        //dropdown categories
+        public ActionResult Customer_Categories()
+        {
+            DropDownCategory entities = new DropDownCategory();
+            var result = db.DropDownCategories.ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         //getting user login details using 
@@ -85,6 +119,13 @@ namespace EcommerceWebApplication.Controllers
         {
                 var customerList = Customer(CustomerId, fromDate, toDate);
                 return Json(customerList.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+        
+        //Read functin for Monthly logins
+        public ActionResult MonthlyLogins_Read([DataSourceRequest]DataSourceRequest request)
+        {
+            var result = LoginMonths();
+            return Json(result.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
     }
 }

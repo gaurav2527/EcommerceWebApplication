@@ -26,6 +26,16 @@
           <Property Name="CustomerID" Type="int" />
           <Property Name="LoginDateTime" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DropDownCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="CategoryName" />
+          </Key>
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
             <PropertyRef Name="OrderDetailID" />
@@ -189,6 +199,7 @@
           <Parameter Name="toDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="usps_Role" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usps_UserHours" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usps_UserLogInDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerList" Type="varchar" Mode="In" />
           <Parameter Name="fromDate" Type="datetime" Mode="In" />
@@ -203,6 +214,12 @@
           <EntitySet Name="ProductInfo" EntityType="Self.ProductInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DropDownCategory" EntityType="Self.DropDownCategory" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DropDownCategory].[CategoryId] AS [CategoryId], 
+    [DropDownCategory].[CategoryName] AS [CategoryName]
+    FROM [dbo].[DropDownCategory] AS [DropDownCategory]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Customer_Roles" Association="Self.FK_Customer_Roles">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Customer" EntitySet="Customer" />
@@ -416,6 +433,8 @@
             <Parameter Name="arg" Mode="In" Type="String" />
             <Parameter Name="delimiter" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="DropDownCategories" EntityType="ECommerceModel.DropDownCategory" />
+          <FunctionImport Name="usps_UserHours" ReturnType="Collection(ECommerceModel.usps_UserHours_Result)" />
         </EntityContainer>
         <EntityType Name="CustomerLastLogin">
           <Key>
@@ -507,6 +526,20 @@
         <ComplexType Name="splitintotable_Result">
           <Property Type="Int32" Name="key" Nullable="false" />
           <Property Type="String" Name="value" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <EntityType Name="DropDownCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="CategoryName" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="usps_UserHours_Result">
+          <Property Type="String" Name="MONTH" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="CustomerName" Nullable="false" />
+          <Property Type="Int32" Name="userlogins" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -650,6 +683,24 @@
               <ComplexTypeMapping TypeName="ECommerceModel.splitintotable_Result">
                 <ScalarProperty Name="key" ColumnName="key" />
                 <ScalarProperty Name="value" ColumnName="value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="DropDownCategories">
+            <EntityTypeMapping TypeName="ECommerceModel.DropDownCategory">
+              <MappingFragment StoreEntitySet="DropDownCategory">
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usps_UserHours" FunctionName="ECommerceModel.Store.usps_UserHours">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ECommerceModel.usps_UserHours_Result">
+                <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="userlogins" ColumnName="userlogins" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

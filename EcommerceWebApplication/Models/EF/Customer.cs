@@ -11,8 +11,7 @@ namespace EcommerceWebApplication.Models.EF
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,20 +23,12 @@ namespace EcommerceWebApplication.Models.EF
         }
     
         public int CustomerID { get; set; }
-        [Required]
         public string CustomerName { get; set; }
-        [Required]
         public string State { get; set; }
-        [Required]
         public string Address { get; set; }
-        [Required]
         public string ContactNumber { get; set; }
-        [Required]
         public string email { get; set; }
-        [Required]
         public string CustomerPassword { get; set; }
-        [Required]
-        [Range(1, 1)]
         public int Role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

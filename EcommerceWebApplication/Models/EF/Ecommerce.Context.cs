@@ -35,6 +35,7 @@ namespace EcommerceWebApplication.Models.EF
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public virtual DbSet<CustomerLastLogin> CustomerLastLogins { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<DropDownCategory> DropDownCategories { get; set; }
     
         public virtual ObjectResult<getUserByDate_Result> getUserByDate(Nullable<int> customerID)
         {
@@ -110,6 +111,11 @@ namespace EcommerceWebApplication.Models.EF
                 new ObjectParameter("delimiter", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<splitintotable_Result>("[ECommerce].[splitintotable](@arg, @delimiter)", argParameter, delimiterParameter);
+        }
+    
+        public virtual ObjectResult<usps_UserHours_Result> usps_UserHours()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserHours_Result>("usps_UserHours");
         }
     }
 }

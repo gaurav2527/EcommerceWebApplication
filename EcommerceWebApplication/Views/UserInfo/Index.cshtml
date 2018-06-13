@@ -33,7 +33,6 @@
                     <option value="0">Select Type</option>
                     <option value="1">Login Time</option>
                     <option value="2">Orders</option>
-                    <option value="3">Users</option>
                 </select>
             </div>
             <div class="form-group col-md-3">
@@ -51,22 +50,49 @@
     </form>
 
     <div class="row">
-           @Html.ActionLink("Users","DetailInfo", "CustomerInfo")
-    </div>
-    @*<div class="row">
+        <div class="col-md-6">
+            <div class="col-md-3">
+                @Html.ActionLink("Users", "DetailInfo", "CustomerInfo")
+            </div>
+            <div class="col-md-3">
+                <select name="month" id="month">
+                    <option value="0">Select Type</option>
+                    <option value="1">Monthly</option>
+                    <option value="2">Yearly</option>
+                </select>
+            </div>
+            </div>
+        </div>
+        @*<div class="row">
              @Html.Action("UserInformation", "UserList")
          </div>
         @*<div class="row" id="userlist">
              @Html.Action("Index", "UserList")
          </div>*@
 
-    <div class="row">
-        <div id="getresult" class="col-md-6"> </div>
-        <div id="getorderinfo" class="col-md-6"> </div>
+        <div class="row">
+            <div id="getresult" class="col-md-6"> </div>
+        </div>
     </div>
-</div>
 
 <script>
+     
+    $("#month").change(function () {
+        debugger
+        var month = $('#month').val();
+        var tempUrl = '@Url.Action("_UserMonthInfo", "Admin", null, "http")';
+        debugger
+        //window.location = result;
+        var data = { "Month": month };
+        $.get(tempUrl, data, function (response) {
+            debugger
+            $('#getresult').html(response);
+            dataSource.read();
+            grid.setDataSource(dataSource);
+            debugger
+        });
+    });
+
     $(document).ready(function () {
         debugger
         $('#customer').multiselect();
@@ -93,7 +119,7 @@
             debugger
             var report = $('#sel1').val();
             debugger
-            var fromdate = $('#fromDate').val();
+               var fromdate = $('#fromDate').val();
             debugger
             var todate = $('#toDate').val();
             debugger
@@ -103,16 +129,6 @@
             };
             debugger
 
-       /* $.ajax({
-            type: 'GET',
-            url: tempUrl,
-            dataType: 'JSON',
-            data: data,
-            traditional: true,
-            success: function (response) {
-                $('#getresult').html(response);
-                },
-    });*/
             $.get(tempUrl, data, function (response) {
                 debugger
                 //if (report == 1)
@@ -121,7 +137,9 @@
                 grid.setDataSource(dataSource);
                 debugger
             });
-        });
+    });
+
+
 </script>
 
 

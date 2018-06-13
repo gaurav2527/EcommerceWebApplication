@@ -16,10 +16,7 @@ namespace EcommerceWebApplication.Controllers
 {
     public class CustomerInfoController : Controller
     {
-        //DbContext.Configuration.ProxyCreationEnabled = false;
         private ECommerce db = new ECommerce();
-        //private Customer customer = new Customer();
-
         // GET: CustomerInfo
         public ActionResult Index()
         {
@@ -81,9 +78,7 @@ namespace EcommerceWebApplication.Controllers
                         Role = customer.Role
                     };
                     db.Customers.Attach(entity);
-
                     db.Entry(entity).State = EntityState.Modified;
-
                     db.SaveChanges();
                 }
             }
@@ -116,7 +111,7 @@ namespace EcommerceWebApplication.Controllers
                     db.SaveChanges();
                 }
             }
-            // Return the removed Customer. Also return any validation errors.
+            // Return after removed Customer. Also return any validation errors.
             return Json(new[] { customer }.ToDataSourceResult(request, ModelState));
         }
 
