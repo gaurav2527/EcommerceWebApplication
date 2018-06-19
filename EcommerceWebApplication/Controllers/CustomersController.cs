@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using EcommerceWebApplication.Models.EF;
 
 namespace EcommerceWebApplication.Controllers
@@ -47,7 +48,8 @@ namespace EcommerceWebApplication.Controllers
                 db.SaveChanges();
                 //id = customer.CustomerID;
                 //id++;
-                return RedirectToAction("Index");
+                return RedirectToAction("About", "Home");
+                //return RedirectToAction("Index");
             }
             return View(customer);
         }
@@ -73,7 +75,7 @@ namespace EcommerceWebApplication.Controllers
                     Session["email"] = obj.email.ToString();
                     Session["name"] = obj.CustomerName.ToString();
                     Session["Role"] = obj.Role;
-
+                 
                     //Session["LastLogin"] = lastlogin.LoginDateTime;
                     //Save last login time in session using proc
                     int customerID = Convert.ToInt32(Session["CustomerID"]);
@@ -119,9 +121,17 @@ namespace EcommerceWebApplication.Controllers
             }
             
         }
-     
+
+        //Logout Session
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Index", "Home");
+        }
+
         // POST: Customers/Delete/5
-    
+
 
         protected override void Dispose(bool disposing)
         {

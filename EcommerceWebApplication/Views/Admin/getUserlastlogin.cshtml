@@ -18,25 +18,7 @@
            columns.Bound(c => c.CustomerName);
            columns.Bound(c => c.LoginDateTime).Format("{0:dd MMM yyyy hh:mm:ss}");
          })
-         .ToolBar(toolbar =>
-                {
-                 toolbar.Template(@<text>
-                <div class="toolbar">
-                    @(Html.Kendo().DropDownList()
-                                .Name("categories")
-                                .OptionLabel("All")
-                                .DataTextField("CategoryName")
-                                .DataValueField("CategoryId")
-                                .AutoBind(false)
-                                .HtmlAttributes(new { style = "width: 150px;" })
-                                .DataSource(ds =>
-                                  {
-                                        ds.Read("Customer_Categories", "Admin");
-                                  })
-                    )
-                </div>
-            </text>);
-                })
+         
          .HtmlAttributes(new { style = "height: 550px;" })
          .Scrollable()
          .Groupable()
