@@ -14,8 +14,8 @@
           <Property Name="State" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
           <Property Name="ContactNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="50" />
-          <Property Name="CustomerPassword" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerPassword" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Role" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomerLastLogin">
@@ -264,8 +264,8 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
           <Property Name="State" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ContactNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Orders" FromRole="Customer" ToRole="Orders" />
           <NavigationProperty Name="CustomerLastLogins" Relationship="ECommerceModel.FK_CustomerLastLogin_Customer" FromRole="Customer" ToRole="CustomerLastLogin" />
           <Property Name="Role" Type="Int32" Nullable="false" />

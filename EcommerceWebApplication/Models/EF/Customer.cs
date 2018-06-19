@@ -22,7 +22,7 @@ namespace EcommerceWebApplication.Models.EF
             this.CustomerLastLogins = new HashSet<CustomerLastLogin>();
             this.ShoppingCarts = new HashSet<ShoppingCart>();
         }
-
+    
         public int CustomerID { get; set; }
         [Required]
         [Display(Name = "Name")]
@@ -43,8 +43,6 @@ namespace EcommerceWebApplication.Models.EF
         [Required]
         [Display(Name = "Password")]
         public string CustomerPassword { get; set; }
-        [Required]
-        [Range(1,1)]
         public int Role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

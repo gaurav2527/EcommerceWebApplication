@@ -37,7 +37,7 @@ namespace EcommerceWebApplication.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerName,State,Address,ContactNumber,email,CustomerPassword")] Customer customer)
+        public ActionResult Create([Bind(Include = "CustomerName,State,Address,ContactNumber,email,CustomerPassword,Role")] Customer customer)
         {
             if (ModelState.IsValid)
             {
