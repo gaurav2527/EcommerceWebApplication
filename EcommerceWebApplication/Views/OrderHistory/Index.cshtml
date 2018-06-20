@@ -1,42 +1,32 @@
-﻿@model EcommerceWebApplication.Models.ProdutViewModel
+﻿@model List<EcommerceWebApplication.Models.EF.usps_CartHistory_Result>
+@Scripts.Render("~/bundles/jquery")
+<link href="~/Style/StyleSheet3.css" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.common-bootstrap.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.bootstrap.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/jquery.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/jszip.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/kendo.all.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/kendo.aspnetmvc.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+<h2>Cart History</h2>
+@(Html.Kendo().Grid(Model)
 
-@{
-    ViewBag.Title = "Index";
-}
+                                                        .Name("grid")
+                                                        .Columns(columns =>
+                                                        {
+                                                            columns.Bound(c => c.ProductName);
+                                                            columns.Bound(c => c.TotalQuantity);
+                                                            columns.Bound(c => c.TotalAmount);
+                                                        })
+                                                        .HtmlAttributes(new { style = "height: 300px;" })
+                                                        .Pageable()
+                                                        .Sortable()
+                                                        .Scrollable()
+                                                        .Groupable()
+                                                        .DataSource(dataSource => dataSource
+                                                        .Ajax()
+         .Read(read => read.Action("OrderHistory_Read", "OrderHistory", new { customerid = Convert.ToInt32(Session["CustomerID"]) }))
+)
+)
 
-<h2>Order History</h2>
-
-<div>
-    <h4>ShoppingCart</h4>
-
-    <hr />
-    @foreach (var item in Model.ShoppingCart)
-    {
-    <dl class="dl-horizontal">
-
-        <dt>
-            @Html.DisplayNameFor(model => item.ProductName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => item.ProductName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => item.Quantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => item.Quantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => item.TotalAmount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => item.TotalAmount)
-        </dd>
-    </dl>
-    }
-</div>

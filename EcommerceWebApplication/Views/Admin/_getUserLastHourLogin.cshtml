@@ -1,4 +1,5 @@
 ﻿@model List<EcommerceWebApplication.Models.EF.usps_UserLoginByHours_Result>
+<link href="~/Style/StyleSheet3.css" rel="stylesheet" type="text/css" />
 @Scripts.Render("~/bundles/jquery")
 <link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.common-bootstrap.min.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
@@ -11,23 +12,23 @@
 
 @(Html.Kendo().Grid(Model)
 
-                     .Name("grid")
-                     .Columns(columns =>
-                     {
-                         columns.Bound(c => c.CustomerID);
-                         columns.Bound(c => c.CustomerName);
-                         //columns.Bound(c => c.Weeks);
-                         columns.Bound(c => c.userlogins);
-             //columns.Bound(c => c.LoginDateTime).Format("{0:dd MMM yyyy hh:mm:ss}");
-         })
-                             .HtmlAttributes(new { style = "height: 550px;" })
-                             .Scrollable()
-                             .Groupable()
-                             .Sortable()
-                             .DataSource(dataSource => dataSource
-                             .Ajax()
-                             .Read(read => read.Action("LastHourLogins_Read", "Admin")
-                       )
-        )
+                         .Name("grid")
+                         .Columns(columns =>
+                         {
+                             columns.Bound(c => c.CustomerID);
+                             columns.Bound(c => c.CustomerName);
+                 //columns.Bound(c => c.Weeks);
+                 columns.Bound(c => c.userlogins);
+                 //columns.Bound(c => c.LoginDateTime).Format("{0:dd MMM yyyy hh:mm:ss}");
+             })
+                                 .HtmlAttributes(new { style = "height: 500px; width: 550px" })
+                                 .Scrollable()
+                                 .Groupable()
+                                 .Sortable()
+                                 .DataSource(dataSource => dataSource
+                                 .Ajax()
+                                 .Read(read => read.Action("LastHourLogins_Read", "Admin")
+                           )
+            )
 )
 

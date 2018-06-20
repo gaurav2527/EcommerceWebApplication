@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using EcommerceWebApplication.Models.EF;
 using EcommerceWebApplication.Models;
+using Kendo.Mvc.UI;
+using Kendo.Mvc.Extensions;
 
 namespace EcommerceWebApplication.Controllers
 {
@@ -17,11 +19,23 @@ namespace EcommerceWebApplication.Controllers
         public ActionResult Index()
         {
             ProdutViewModel product = new ProdutViewModel();
-            using (ECommerce context = new ECommerce())
+            var customerid = Convert.ToInt32(Session["CustomerID"]);
+            var result = CartHistoryDetails(customerid);
+            return View(result);
+        }
+
+        private List<usps_CartHistory_Result> CartHistoryDetails(int CustomerId)
+        {
+            using (ECommerce db = new ECommerce())
             {
-                product.ShoppingCart = context.ShoppingCarts.ToList();
+                return db.usps_CartHistory(CustomerId).ToList();
             }
-                return View(product);
+        }
+
+        public ActionResult OrderHistory_Read([DataSourceRequest]DataSourceRequest request, int customerid)
+        {
+            var result = CartHistoryDetails(customerid);
+            return Json(result.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -8,25 +8,24 @@
 <script src="@Url.Content("~/Scripts/kendo/2018.2.516/kendo.all.min.js")"></script>
 <script src="@Url.Content("~/Scripts/kendo/2018.2.516/kendo.aspnetmvc.min.js")"></script>
 <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
-
 @(Html.Kendo().Grid(Model)
 
-                 .Name("grid")
-                 .Columns(columns =>
-                 {
-                     columns.Bound(c => c.CustomerID);
-                     columns.Bound(c => c.CustomerName);
-                     columns.Bound(c => c.WEEKS);
-                     columns.Bound(c => c.userlogins);
-                     //columns.Bound(c => c.LoginDateTime).Format("{0:dd MMM yyyy hh:mm:ss}");
-                 })
-                         .HtmlAttributes(new { style = "height: 550px;" })
-                         .Scrollable()
-                         .Groupable()
-                         .Sortable()
-                         .DataSource(dataSource => dataSource
-                         .Ajax()
-                         .Read(read => read.Action("WeeklyLogins_Read", "Admin")
-                   )
-    )
+                     .Name("grid")
+                     .Columns(columns =>
+                     {
+                         columns.Bound(c => c.CustomerID);
+                         columns.Bound(c => c.CustomerName);
+                         columns.Bound(c => c.WEEKS);
+                         columns.Bound(c => c.userlogins);
+             //columns.Bound(c => c.LoginDateTime).Format("{0:dd MMM yyyy hh:mm:ss}");
+         })
+                             .HtmlAttributes(new { style = "height: 500px; width: 550px"})
+                             .Scrollable()
+                             .Groupable()
+                             .Sortable()
+                             .DataSource(dataSource => dataSource
+                             .Ajax()
+                             .Read(read => read.Action("WeeklyLogins_Read", "Admin", new { fromDate = Convert.ToDateTime(TempData["fromdate"]), toDate = Convert.ToDateTime(TempData["todate"]), CustomerId = Convert.ToString(TempData["CustomerId"]) }))
+                       )
+        )
 )

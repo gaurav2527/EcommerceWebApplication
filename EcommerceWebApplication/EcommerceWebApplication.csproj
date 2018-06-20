@@ -197,6 +197,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CustomerInfoController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ErrorHandlerAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderHistoryController.cs" />
@@ -236,6 +237,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Ecommerce.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\Employee.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\getUserByDate_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
@@ -261,6 +265,9 @@
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\UserLogin.cs" />
+    <Compile Include="Models\EF\usps_CartHistory_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\usps_Customers_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
@@ -274,6 +281,9 @@
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\usps_UserHours_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\usps_UserLoginByCondition_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\usps_UserLoginByHours_Result.cs">
@@ -1017,6 +1027,8 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\utils.js" />
     <Content Include="Style\StyleSheet1.css" />
+    <Content Include="Style\StyleSheet2.css" />
+    <Content Include="Style\StyleSheet3.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1194,10 +1206,12 @@
     <Content Include="Views\Admin\_getUserMonthlyLogins.cshtml" />
     <Content Include="Views\Admin\_getUserWeeklyLogin.cshtml" />
     <Content Include="Views\Admin\_getUserLastHourLogin.cshtml" />
+    <Content Include="Views\Admin\_getUserAllInfo.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Employee\empDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />
-    <Folder Include="LocalResource\" />
     <Folder Include="Views\Logout\" />
   </ItemGroup>
   <ItemGroup>

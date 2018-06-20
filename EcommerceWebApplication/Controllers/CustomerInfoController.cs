@@ -27,8 +27,6 @@ namespace EcommerceWebApplication.Controllers
         {
             
             db.Configuration.LazyLoadingEnabled = false;
-            //var result = UserDetails();
-            //return View(result);
             var result = db.Customers.ToList();
             return View(result);
         }

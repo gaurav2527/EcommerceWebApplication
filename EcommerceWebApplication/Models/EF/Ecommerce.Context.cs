@@ -36,6 +36,7 @@ namespace EcommerceWebApplication.Models.EF
         public virtual DbSet<CustomerLastLogin> CustomerLastLogins { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<DropDownCategory> DropDownCategories { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
     
         public virtual ObjectResult<getUserByDate_Result> getUserByDate(Nullable<int> customerID)
         {
@@ -118,14 +119,52 @@ namespace EcommerceWebApplication.Models.EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserHours_Result>("usps_UserHours");
         }
     
-        public virtual ObjectResult<usps_UserLoginByWeeks_Result> usps_UserLoginByWeeks()
+        public virtual ObjectResult<usps_UserLoginByWeeks_Result> usps_UserLoginByWeeks(string customerList, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLoginByWeeks_Result>("usps_UserLoginByWeeks");
+            var customerListParameter = customerList != null ?
+                new ObjectParameter("CustomerList", customerList) :
+                new ObjectParameter("CustomerList", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLoginByWeeks_Result>("usps_UserLoginByWeeks", customerListParameter, fromDateParameter, toDateParameter);
         }
     
         public virtual ObjectResult<usps_UserLoginByHours_Result> usps_UserLoginByHours()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLoginByHours_Result>("usps_UserLoginByHours");
+        }
+    
+        public virtual ObjectResult<usps_CartHistory_Result> usps_CartHistory(Nullable<int> customerID)
+        {
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_CartHistory_Result>("usps_CartHistory", customerIDParameter);
+        }
+    
+        public virtual ObjectResult<usps_UserLoginByCondition_Result> usps_UserLoginByCondition(string customerList, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var customerListParameter = customerList != null ?
+                new ObjectParameter("CustomerList", customerList) :
+                new ObjectParameter("CustomerList", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLoginByCondition_Result>("usps_UserLoginByCondition", customerListParameter, fromDateParameter, toDateParameter);
         }
     }
 }

@@ -19,7 +19,13 @@
                                                                         columns.Bound(c => c.Quantity);
                                                                         columns.Bound(c => c.TotalAmount);
                                                                     })
-                                                                    .HtmlAttributes(new { style = "height: 550px;" })
+                                                                    .HtmlAttributes(new { style = "height: 500px; width: 500px" })
+                                                                    .Scrollable()
+         .Groupable()
+         .Sortable()
+         .DataSource(dataSource => dataSource
+         .Ajax()
+         .Read(read => read.Action("Orders_Read", "Admin", new { fromDate = Convert.ToDateTime(TempData["fromdate"]), toDate = Convert.ToDateTime(TempData["todate"]), CustomerId = Convert.ToString(TempData["CustomerId"]) }))
 )
 )
 
