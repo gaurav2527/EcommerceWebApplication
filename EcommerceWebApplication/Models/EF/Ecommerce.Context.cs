@@ -166,5 +166,10 @@ namespace EcommerceWebApplication.Models.EF
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_UserLoginByCondition_Result>("usps_UserLoginByCondition", customerListParameter, fromDateParameter, toDateParameter);
         }
+    
+        public virtual ObjectResult<usps_Employees_Result> usps_Employees()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_Employees_Result>("usps_Employees");
+        }
     }
 }

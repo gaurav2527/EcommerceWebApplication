@@ -10,13 +10,11 @@
 namespace EcommerceWebApplication.Models.EF
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Employee
+    public partial class usps_Employees_Result
     {
         public int EmpID { get; set; }
         public string EmployeeName { get; set; }
-        public int Manager { get; set; }
         public string ManagerName { get; set; }
     }
 }

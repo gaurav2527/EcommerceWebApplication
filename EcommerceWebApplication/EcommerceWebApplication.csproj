@@ -271,6 +271,9 @@
     <Compile Include="Models\EF\usps_Customers_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\usps_Employees_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\usps_LastUserLogin_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
