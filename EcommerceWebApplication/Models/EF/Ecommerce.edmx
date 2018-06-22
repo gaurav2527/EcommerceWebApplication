@@ -43,7 +43,6 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
           <Property Name="EmpID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Manager" Type="int" Nullable="false" />
-          <Property Name="ManagerName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
@@ -203,6 +202,7 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
         </Function>
         <Function Name="usps_Customers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usps_Employees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usps_EmployeesManager" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usps_LastUserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerID" Type="int" Mode="In" />
         </Function>
@@ -476,6 +476,7 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
           </FunctionImport>
           <EntitySet Name="Employees" EntityType="ECommerceModel.Employee" />
           <FunctionImport Name="usps_Employees" ReturnType="Collection(ECommerceModel.usps_Employees_Result)" />
+          <FunctionImport Name="usps_EmployeesManager" ReturnType="Collection(ECommerceModel.usps_EmployeesManager_Result)" />
         </EntityContainer>
         <EntityType Name="CustomerLastLogin">
           <Key>
@@ -611,12 +612,17 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
           <Property Name="EmpID" Type="Int32" Nullable="false" />
           <Property Name="EmployeeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Manager" Type="Int32" Nullable="false" />
-          <Property Name="ManagerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="usps_Employees_Result">
           <Property Type="Int32" Name="EmpID" Nullable="false" />
           <Property Type="String" Name="EmployeeName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ManagerName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="usps_EmployeesManager_Result">
+          <Property Type="Int32" Name="EmpID" Nullable="false" />
+          <Property Type="String" Name="EmployeeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ManagerName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Manager" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -822,7 +828,6 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="ECommerceModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="ManagerName" ColumnName="ManagerName" />
                 <ScalarProperty Name="Manager" ColumnName="Manager" />
                 <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
                 <ScalarProperty Name="EmpID" ColumnName="EmpID" />
@@ -835,6 +840,16 @@ warning 6002: The table/view 'ECommerce.dbo.DropDownCategory' does not have a pr
                 <ScalarProperty Name="EmpID" ColumnName="EmpID" />
                 <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
                 <ScalarProperty Name="ManagerName" ColumnName="ManagerName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usps_EmployeesManager" FunctionName="ECommerceModel.Store.usps_EmployeesManager">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ECommerceModel.usps_EmployeesManager_Result">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="ManagerName" ColumnName="ManagerName" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

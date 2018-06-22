@@ -17,6 +17,8 @@ namespace EcommerceWebApplication.Controllers
     public class EmployeeController : Controller
     {
         private ECommerce db = new ECommerce();
+        private ManagerViewModel manager = new ManagerViewModel();
+        private Employee emps = new Employee();
         // GET: Employee
         public ActionResult Index()
         {
@@ -26,8 +28,10 @@ namespace EcommerceWebApplication.Controllers
         public ActionResult EmpDetails()
          {
             db.Configuration.LazyLoadingEnabled = false;
-            var result = db.Employees.ToList();
-            return View(result);
+            manager.Employee = db.Employees.ToList();
+            manager.EmployeesManager = EmployeeMangerDetails();
+            //var result = EmployeeMangerDetails();
+            return View(manager);
         }
 
         public ActionResult Employee_Read([DataSourceRequest]DataSourceRequest request)
@@ -37,7 +41,7 @@ namespace EcommerceWebApplication.Controllers
                 //IQueryable<Customer> customers = db.Customers;
                 //DataSourceResult result = customers.ToDataSourceResult(request);
                 //return Json(result, JsonRequestBehavior.AllowGet);
-                var result = EmpDetail();
+                var result = EmployeeMangerDetails();
                 return Json(result.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
             }
         }
@@ -67,19 +71,21 @@ namespace EcommerceWebApplication.Controllers
             {
                 foreach(var emp in emps)
                 {
-                    using (ECommerce db = new ECommerce())
-                    {
-                        var entity = new Employee()
+                        using (ECommerce db = new ECommerce())
                         {
-                            EmpID = emp.EmpID,
-                            EmployeeName = emp.EmployeeName,
-                            Manager = emp.Manager,
-                            ManagerName = emp.ManagerName
-                        };
-                        db.Employees.Attach(entity);
-                        db.Entry(entity).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
+
+                            var entity = new Employee()
+                            {
+                                EmpID = emp.EmpID,
+                                EmployeeName = emp.EmployeeName,
+                                Manager = emp.Manager,
+                                //ManagerName = emp.ManagerName
+                            };
+                            db.Employees.Attach(entity);
+                            db.Entry(entity).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                   
                 }
             }
             return Json(emps.ToDataSourceResult(request, ModelState));
@@ -99,7 +105,7 @@ namespace EcommerceWebApplication.Controllers
                         {
                             EmpID = emp.EmpID,
                             EmployeeName = emp.EmployeeName,
-                            ManagerName = emp.ManagerName,
+                            //ManagerName = emp.ManagerName,
                             Manager = emp.Manager
                         };
                         // Attach the entity.
@@ -121,6 +127,14 @@ namespace EcommerceWebApplication.Controllers
             using (ECommerce db = new ECommerce())
             {
                 return db.usps_Employees().ToList();
+            }
+        }
+
+        private List<usps_EmployeesManager_Result> EmployeeMangerDetails()
+        {
+            using (ECommerce db = new ECommerce())
+            {
+                return db.usps_EmployeesManager().ToList();
             }
         }
 

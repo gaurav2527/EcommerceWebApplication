@@ -271,6 +271,9 @@
     <Compile Include="Models\EF\usps_Customers_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\usps_EmployeesManager_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\usps_Employees_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
@@ -298,6 +301,7 @@
     <Compile Include="Models\EF\usps_UserLogInDetails_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ManagerViewModel.cs" />
     <Compile Include="Models\ProdutViewModel.cs" />
     <Compile Include="Models\EF\Shopping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
