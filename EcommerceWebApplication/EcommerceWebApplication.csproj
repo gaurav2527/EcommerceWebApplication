@@ -198,6 +198,7 @@
     <Compile Include="Controllers\CustomerInfoController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\EmployeeManagerController.cs" />
     <Compile Include="Controllers\ErrorHandlerAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderHistoryController.cs" />
@@ -275,6 +276,12 @@
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\usps_Employees_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\usps_EmpManagers_Result.cs">
+      <DependentUpon>Ecommerce.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\usps_getManagerList_Result.cs">
       <DependentUpon>Ecommerce.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\usps_LastUserLogin_Result.cs">

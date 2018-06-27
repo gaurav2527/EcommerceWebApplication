@@ -11,10 +11,9 @@ namespace EcommerceWebApplication.Models.EF
 {
     using System;
     
-    public partial class usps_Employees_Result
+    public partial class usps_getManagerList_Result
     {
-        public int EmpID { get; set; }
-        public string EmployeeName { get; set; }
-        public int Manager { get; set; }
+        public Nullable<int> EmpID { get; set; }
+        public Nullable<int> Manager { get; set; }
     }
 }

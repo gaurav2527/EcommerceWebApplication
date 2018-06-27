@@ -26,7 +26,7 @@ namespace EcommerceWebApplication.Controllers
         }
 
         public ActionResult EmpDetails()
-         {
+        {
             db.Configuration.LazyLoadingEnabled = false;
             manager.Employee = db.Employees.ToList();
             manager.EmployeesManager = EmployeeMangerDetails();
@@ -48,12 +48,14 @@ namespace EcommerceWebApplication.Controllers
 
         public ActionResult Employee_Create([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Employee> emps)
         {
+            db.Configuration.LazyLoadingEnabled = false;
+            //db.Configuration.ProxyCreationEnabled = false;
             var results = new List<Employee>();
             if (emps != null)
             {
-                foreach(var emp in emps)
+                foreach (var emp in emps)
                 {
-                    db.Employees.Add(emp);
+                    var manager = db.Employees.Add(emp);
                     db.SaveChanges();
                     results.Add(emp);
                 }
@@ -66,37 +68,45 @@ namespace EcommerceWebApplication.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Employee_Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Employee> emps)
         {
-            //if (ModelState.IsValid)
+            db.Configuration.LazyLoadingEnabled = false;
+            //db.Configuration.ProxyCreationEnabled = false;
             if (emps != null)
             {
-                foreach(var emp in emps)
+                foreach (var emp in emps)
                 {
+                    //var isIn = db.Employees.Where(s => s.EmpID.Equals(emp.Manager) && s.Manager.Equals(emp.EmpID));
+                    //var custEmpQuery = result.Where(c => c.Manager.Equals(emp.EmpID)); 
+                    //var isIn = result.Where(c => c.Manager.Equals(emp.EmpID));
+                    //bool isIn = result.Any(c => c.Manager.Equals(emp.EmpID));
+                    var result = MangerList(emp.EmpID);
+                    var a = emp.Manager;
+                    if (!result.Any(s => s.EmpID.Equals(a)))
+                    {
                         using (ECommerce db = new ECommerce())
                         {
-
                             var entity = new Employee()
                             {
                                 EmpID = emp.EmpID,
                                 EmployeeName = emp.EmployeeName,
-                                Manager = emp.Manager,
+                                Manager = emp.Manager
                                 //ManagerName = emp.ManagerName
                             };
-                            db.Employees.Attach(entity);
+                            //db.Employees.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges();
                         }
-                   
+                    }
                 }
             }
-            return Json(emps.ToDataSourceResult(request, ModelState));
-            //return Json(new[] { emps }.ToDataSourceResult(request, ModelState));
+            return RedirectToAction("Employee_Read");
+            //return Json(emps.ToDataSourceResult(request, ModelState));
         }
 
         public ActionResult Employee_Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Employee> emps)
         {
-            if(emps!=null)
+            if (emps != null)
             {
-                foreach(var emp in emps)
+                foreach (var emp in emps)
                 {
                     using (var db = new ECommerce())
                     {
@@ -121,22 +131,70 @@ namespace EcommerceWebApplication.Controllers
             //return Json(new[] { emps }.ToDataSourceResult(request, ModelState));
         }
 
-        //getting employee relationship table
-        private List<usps_Employees_Result> EmpDetail()
+       
+        public JsonResult Remote_Data_Binding_Get_Employees(int? id)
+        {
+            var dataContext = new ECommerce();
+            
+                var employees = from e in dataContext.Employees
+                                where (id.HasValue ? e.Manager == id : e.Manager == 0)
+                                select new
+                                {
+                                    id = e.EmpID,
+                                    Name = e.EmployeeName,
+                                    hasChildren = (from q in dataContext.Employees
+                                                   where (q.Manager == e.EmpID)
+                                                   select q
+                                                   )
+                                };
+                //List<> items = new List<>;
+                //var items = EmployeeMangerDetails();
+                //var viewmodel = items.Select(t => new
+                // var viewmodel = new
+                //{
+                //   id = 1,
+                //   Text = "Vicky",
+                //  hasChildren = "Nishu Sharma"
+                //};
+                // return Json(viewmodel, JsonRequestBehavior.AllowGet);
+            return Json(employees, JsonRequestBehavior.AllowGet);
+        }
+
+
+            //getting employee relationship table
+            private List<usps_Employees_Result> EmpDetail()
+            {
+                using (ECommerce db = new ECommerce())
+                {
+                    return db.usps_Employees().ToList();
+                }
+            }
+
+            private List<usps_EmployeesManager_Result> EmployeeMangerDetails()
+            {
+                using (ECommerce db = new ECommerce())
+                {
+                    return db.usps_EmployeesManager().ToList();
+                }
+            }
+
+        //getting Employee and Managers List
+        /*  private List<usps_EmpManagers_Result> MangerList(int empId)
+          {
+              using (ECommerce db = new ECommerce())
+              {
+                  return db.usps_EmpManagers(empId).ToList();
+              }
+          }*/
+        private List<usps_getManagerList_Result> MangerList(int empID)
         {
             using (ECommerce db = new ECommerce())
             {
-                return db.usps_Employees().ToList();
+                return db.usps_getManagerList(empID).ToList();
             }
         }
 
-        private List<usps_EmployeesManager_Result> EmployeeMangerDetails()
-        {
-            using (ECommerce db = new ECommerce())
-            {
-                return db.usps_EmployeesManager().ToList();
-            }
-        }
+
 
         protected override void Dispose(bool disposing)
         {

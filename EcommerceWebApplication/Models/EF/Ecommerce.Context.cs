@@ -20,6 +20,7 @@ namespace EcommerceWebApplication.Models.EF
         public ECommerce()
             : base("name=ECommerce")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -175,6 +176,24 @@ namespace EcommerceWebApplication.Models.EF
         public virtual ObjectResult<usps_EmployeesManager_Result> usps_EmployeesManager()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_EmployeesManager_Result>("usps_EmployeesManager");
+        }
+    
+        public virtual ObjectResult<usps_EmpManagers_Result> usps_EmpManagers(Nullable<int> empID)
+        {
+            var empIDParameter = empID.HasValue ?
+                new ObjectParameter("EmpID", empID) :
+                new ObjectParameter("EmpID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_EmpManagers_Result>("usps_EmpManagers", empIDParameter);
+        }
+    
+        public virtual ObjectResult<usps_getManagerList_Result> usps_getManagerList(Nullable<int> empID)
+        {
+            var empIDParameter = empID.HasValue ?
+                new ObjectParameter("EmpID", empID) :
+                new ObjectParameter("EmpID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usps_getManagerList_Result>("usps_getManagerList", empIDParameter);
         }
     }
 }
