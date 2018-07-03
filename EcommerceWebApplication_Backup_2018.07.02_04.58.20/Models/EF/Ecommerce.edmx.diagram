@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5163b65376fb40dc902baa7cf26c5947" Name="Diagram1" ZoomLevel="94">
+        <EntityTypeShape EntityType="ECommerceModel.Customer" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECommerceModel.OrderDetail" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECommerceModel.Order" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECommerceModel.ProductCategory" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECommerceModel.ProductInfo" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECommerceModel.ShoppingCart" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="ECommerceModel.FK_Orders_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="ECommerceModel.FK_OrderDetails_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="ECommerceModel.FK_OrderDetails_ProductInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="ECommerceModel.FK_ProductInfo_ProductCategory" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ECommerceModel.CustomerLastLogin" Width="2.375" PointX="3.625" PointY="8.5" />
+        <AssociationConnector Association="ECommerceModel.FK_CustomerLastLogin_Customer" />
+        <EntityTypeShape EntityType="ECommerceModel.Role" Width="1.5" PointX="0.75" PointY="9.625" />
+        <AssociationConnector Association="ECommerceModel.FK_Customer_Roles" />
+        <AssociationConnector Association="ECommerceModel.FK_ShoppingCart_Customer" />
+        <EntityTypeShape EntityType="ECommerceModel.DropDownCategory" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ECommerceModel.Employee" Width="1.5" PointX="8.375" PointY="3.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -80,7 +80,7 @@ namespace EcommerceWebApplication.Controllers
                     //bool isIn = result.Any(c => c.Manager.Equals(emp.EmpID));
                     var result = MangerList(emp.EmpID);
                     var a = emp.Manager;
-                    if (!result.Any(s => s.EmpID.Equals(a)))
+                    if (!result.Any(s => s.EmpID.Equals(a)) && !emp.EmpID.Equals(emp.Manager))
                     {
                         using (ECommerce db = new ECommerce())
                         {
@@ -89,17 +89,16 @@ namespace EcommerceWebApplication.Controllers
                                 EmpID = emp.EmpID,
                                 EmployeeName = emp.EmployeeName,
                                 Manager = emp.Manager
-                                //ManagerName = emp.ManagerName
                             };
-                            //db.Employees.Attach(entity);
+                            db.Employees.Attach(entity);
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges();
                         }
+                        return Json(emps.ToDataSourceResult(request, ModelState));
                     }
                 }
             }
             return RedirectToAction("Employee_Read");
-            //return Json(emps.ToDataSourceResult(request, ModelState));
         }
 
         public ActionResult Employee_Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Employee> emps)
@@ -131,38 +130,54 @@ namespace EcommerceWebApplication.Controllers
             //return Json(new[] { emps }.ToDataSourceResult(request, ModelState));
         }
 
-       
+
         public JsonResult Remote_Data_Binding_Get_Employees(int? id)
         {
             var dataContext = new ECommerce();
-            
-                var employees = from e in dataContext.Employees
-                                where (id.HasValue ? e.Manager == id : e.Manager == 0)
-                                select new
-                                {
-                                    id = e.EmpID,
-                                    Name = e.EmployeeName,
-                                    hasChildren = (from q in dataContext.Employees
-                                                   where (q.Manager == e.EmpID)
-                                                   select q
-                                                   )
-                                };
-                //List<> items = new List<>;
-                //var items = EmployeeMangerDetails();
-                //var viewmodel = items.Select(t => new
-                // var viewmodel = new
-                //{
-                //   id = 1,
-                //   Text = "Vicky",
-                //  hasChildren = "Nishu Sharma"
-                //};
-                // return Json(viewmodel, JsonRequestBehavior.AllowGet);
+
+            var employees = from e in dataContext.Employees
+                            where (id.HasValue ? e.Manager == id : e.Manager == 0)
+                            select new
+                            {
+                                id = e.EmpID,
+                                Name = e.EmployeeName,
+                                hasChildren = (from q in dataContext.Employees
+                                               where (q.Manager == e.EmpID)
+                                               select q
+                                               )
+                            };
+            //List<> items = new List<>;
+            //var items = EmployeeMangerDetails();
+            //var viewmodel = items.Select(t => new
+            // var viewmodel = new
+            //{
+            //   id = 1,
+            //   Text = "Vicky",
+            //  hasChildren = "Nishu Sharma"
+            //};
+            // return Json(viewmodel, JsonRequestBehavior.AllowGet);
             return Json(employees, JsonRequestBehavior.AllowGet);
         }
 
+        //save employee and manager after rearrange positions in tree view.
+        [HttpPost]
+        public void SaveNode(int id, int? reportsTo)
+        {
+            var result = MangerList(id);
+            var a = reportsTo;
+            if (!result.Any(s => s.EmpID.Equals(a)) && !id.Equals(a))
+            {
+                var employee = db.Employees.First(e => e.EmpID == id);
+                employee.Manager = Convert.ToInt32(reportsTo);
+                db.SaveChanges();
+            }
+            //var response = EmployeeMangerDetails();
+            //return Json(response, JsonRequestBehavior.AllowGet);
+            // return RedirectToAction("Employee_Read");
+        }
 
-            //getting employee relationship table
-            private List<usps_Employees_Result> EmpDetail()
+        //getting employee relationship table
+        private List<usps_Employees_Result> EmpDetail()
             {
                 using (ECommerce db = new ECommerce())
                 {
@@ -193,8 +208,6 @@ namespace EcommerceWebApplication.Controllers
                 return db.usps_getManagerList(empID).ToList();
             }
         }
-
-
 
         protected override void Dispose(bool disposing)
         {

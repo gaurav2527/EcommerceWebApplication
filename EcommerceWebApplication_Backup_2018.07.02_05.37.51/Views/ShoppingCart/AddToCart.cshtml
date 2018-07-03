@@ -1,0 +1,87 @@
+﻿@model EcommerceWebApplication.Models.ProdutViewModel
+
+@{
+    ViewBag.Title = "AddToCart";
+}
+
+<h2>AddToCart</h2>
+
+<div>
+    <h4>ProductInfo</h4>
+    <hr />
+    <div>
+        @Html.BeginForm("Cart", "ShoppingCart", FormMethod.Post)
+        <div class="row product" id=@Html.DisplayFor(model => model.ProductDetails.ProductID)>
+            <div class="col-md-4" style="margin-top:10px; margin-bottom: 10px">
+                <div hidden style="padding: 5px">Product ID: @Html.DisplayFor(model => model.ProductDetails.ProductID)</div>
+                <div id="productname" style="padding: 5px">ProductName: @Html.DisplayFor(model => model.ProductDetails.ProductName)</div>
+                <div id="price" name="price" style="padding: 5px">ProductPrice: @Html.DisplayFor(model => model.ProductDetails.ProductPrice) INR</div>
+                <div style="padding: 5px">Available Colors: @Html.DisplayFor(model => model.ProductDetails.Color)</div>
+                <div style="padding: 5px">Category: @Html.DisplayFor(model => model.ProductDetails.ProductCategory.ProductCategory1)</div>
+                @Html.HiddenFor(model => model.ProductDetails.ProductID, new { @Name = "productId" })
+            </div>
+            <div class="col-md-4" style="margin-top: 10px; margin-bottom: 10px">
+                <div>
+                    <img src="@Url.Content(Model.ProductDetails.Photo)" style="max-height: 200px; max-width: 200px" />
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top: 20px">
+                <div>
+                    <div>
+                        @Html.Label("Quantity")
+                        <input type="number" id="quantity" class="quant" name="Quantity" min="1" />
+                        <button type="submit" id="buttonSubmit">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    try {
+        $(function () {
+            $('#buttonSubmit').click(function AddToCart()
+            {
+                //var cart = [];
+                //var stored = [];
+                //var cart = [];
+                var price = "@Html.DisplayFor(model => model.ProductDetails.ProductPrice)";
+                debugger
+                var name = "@Html.DisplayFor(model => model.ProductDetails.ProductName)";
+                debugger
+                var quantity = $('#quantity').val();
+                debugger
+                //retrieve previous data stored in local storage
+                var cart = JSON.parse(localStorage.getItem("cart")) || [];
+                debugger
+                for (var i in cart)
+                {
+                    if (cart[i].ProductName == name)
+                    {
+                        var x = cart[i].Quantity;
+                        var y = parseInt(x, 10);
+                        var z = parseInt(quantity, 10);
+                        cart[i].Quantity = y + z;
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        return;
+                    }
+                }
+                //var storedresult = JSON.parse(retrievedObject);
+                //stored.push(storedresult);
+                // Assign new product in item
+                var item = { "ProductName": name, "Quantity": quantity, "ProductPrice": price };
+                debugger
+                cart.push(item);
+                debugger
+                localStorage.setItem("cart", JSON.stringify(cart));
+                debugger
+            });
+        });             
+    }
+    catch (err)
+    {
+        console.log("Exception occurred");
+    }
+</script>

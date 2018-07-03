@@ -1,0 +1,212 @@
+﻿@model IEnumerable<EcommerceWebApplication.Models.EF.Customer>
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Style/StyleSheet3.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>*@
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="~/Content/bootstrap-multiselect.css" type="text/css" />
+
+   <h2>Admin Panel</h2>
+    @*@Html.BeginForm("UserInfo", "Admin", FormMethod.Post)*@
+   <div class="row">
+       <form class="col-md-4" action="@Url.Action(" CustomerLoginDetails","Admin")" style="margin-top: 20px">
+           <div class="form-group" style="width: 200px">
+               <label for="userlist">User List:</label><br>
+               <select name="CustomerName" id="customer" class="form-control" multiple>
+                   <option value="0">--Select User--</option>
+                   @foreach (var item in Model)
+            {
+               <option value="@item.CustomerID">@item.CustomerName</option>
+    }
+               </select>
+           </div>
+           <div class="form-group" style="width: 200px">
+               <label for="sel1">Report Type:</label>
+               <select name="Type" class="form-control" id="sel1">
+                   <option value="0">Select Type</option>
+                   <option value="1">Login Time</option>
+                   <option value="2">Orders</option>
+               </select>
+           </div>
+           <input type="hidden" id="customerid" name="customerid" value="customerId" />
+
+           <div class="form-group" style="width: 200px">
+               <label for="sel1">From Date</label>
+               <div class='input-group date' id='fromDate'>
+                   <input type='text' class="form-control" />
+                   <span class="input-group-addon">
+                       <span class="glyphicon glyphicon-calendar"></span>
+                   </span>
+               </div>
+           </div>
+
+           <div class="form-group" style="width: 200px">
+               <label for="sel1">To Date</label>
+               <div class='input-group date' id='toDate'>
+                   <input type='text' class="form-control" />
+                   <span class="input-group-addon">
+                       <span class="glyphicon glyphicon-calendar"></span>
+                   </span>
+               </div>
+           </div>
+
+           <div class="form-group" style="width: 200px">
+               <label for="user logins">User Logins:</label>
+               <select name="month" id="month" class="form-control">
+                   <option value="0">Select Type</option>
+                   <option value="1">Monthly</option>
+                   <option value="2">Week</option>
+                   <option value="3">Last Hour</option>
+                   <option value="4">All</option>
+               </select>
+           </div>
+
+           <input type="submit" id="btn" value="submit" class="btn btn-primary" style="width:100px"><br>
+       </form>
+       @*<div class="row">
+            @Html.Action("UserInformation", "UserList")
+        </div>
+        @*<div class="row" id="userlist">
+            @Html.Action("Index", "UserList")
+        </div>*@
+
+       <div class="col-md-8">
+           <div id="getresult"></div>
+       </div>
+   </div>
+   <div style="padding-top: 10px">
+       @Html.ActionLink("Users", "DetailInfo", "CustomerInfo")
+       @Html.ActionLink("Employee", "EmpDetails", "Employee")
+   </div>
+<script>
+
+        $(document).ready(function () {
+            debugger;
+            $('#customer').multiselect();
+        });
+
+        $(function () {
+
+            //$('#fromDate').date
+            $('#fromDate').datetimepicker({
+                format: 'DD-MM-YYYY',
+            });
+            $('#toDate').datetimepicker({
+                format: 'DD-MM-YYYY',
+            });
+            //$("#fromDate").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
+        });
+
+        @*$("#month").change(function () {
+            debugger
+            var month = $('#month').val();
+            var tempUrl = '@Url.Action("_UserMonthInfo", "Admin", null, "http")';
+            debugger
+            //window.location = result;
+            var data = { "Month": month };
+            $.get(tempUrl, data, function (response) {
+                debugger
+                $('#getresult').html(response);
+                //dataSource.read();
+                //grid.setDataSource(dataSource);
+                debugger
+            });
+        });*@
+
+        $("#btn").click(function (event) {
+            debugger
+            event.preventDefault();
+            //grab all form data
+            //var dialogDiv = $('#getresult');
+            var tempUrl = '@Url.Action("CustomerLoginDetails", "Admin", null, "http")';
+            //var form = $("#form");
+            //var formdata = new FormData(form);
+            //var data;
+            //data = form.serialize();
+            //data = new FormData(form);
+            //var data = formdata.serialize();
+            //var url = form.attr("action");
+            //console.log(data);
+            var customerid = new Array();
+            customerid = $('#customer').val();
+            //var customerID = JSON.stringify(customerid);
+            customerid = customerid.join(",")
+            debugger
+            var report = $('#sel1').val();
+            debugger
+            var fromdate = $('#fromDate').find("input").val();
+            //var fromdate = $('#fromDate').val();
+            debugger
+            var todate = $('#toDate').find("input").val();
+            //var todate = $('#toDate').val();
+            debugger
+            var month = $('#month').val();
+            //var data = { "CustomerId": customerid, "Report": report};
+            var data = {
+                "CustomerId": customerid, "Report": report, "FromDate": fromdate, "ToDate": todate, "Month": month
+            };
+            debugger
+
+            $.get(tempUrl, data, function (response) {
+                debugger
+                //if (report == 1)
+                $('#getresult').html(response);
+                //dataSource.read();
+                //grid.setDataSource(dataSource);
+                debugger
+            });
+        });
+</script>
+
+
+@*$.ajax({
+    type: 'POST',
+    url: url,
+    dataType: 'text/html',
+    data: formdata,
+    error: (msg) => { console.log(msg) },
+    success: function (response) {
+    if (response.status == "success") {
+    $('#getresult').html();
+    }
+    },
+    });
+    });*@
+
+@* $.ajax({
+    url: tempUrl,
+    method: "POST",
+    data: data,
+    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+    dataType: 'html',
+    success: function (result) {
+    if (result.status == "success") {
+    $("#getresult").html(result);
+    }
+    },
+    error: (msg) => { console.log(msg) },
+    });*@
+
+@*
+    <script>
+        debugger
+        function OnSuccess(result) {
+            debugger
+            $('#getresult').html(result);
+        };
+
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+    </script>*@
+@*@Html.ActionLink(", "#", "#", new { customerId = item.CustomerID }, null)*@
+
+
+
+

@@ -1,0 +1,34 @@
+﻿@model List<EcommerceWebApplication.Models.EF.usps_UserLogInDetails_Result>
+<link href="~/Style/StyleSheet3.css" rel="stylesheet" type="text/css" />
+@Scripts.Render("~/bundles/jquery")
+<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.common-bootstrap.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.bootstrap.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/jquery.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/jszip.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/kendo.all.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/kendo.aspnetmvc.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+@(Html.Kendo().Grid(Model)
+
+                 .Name("grid")
+                 .Columns(columns =>
+                 {
+                     columns.Bound(c => c.CustomerID);
+                     columns.Bound(c => c.CustomerName);
+                     //columns.Bound(c => c.MONTH);
+                     //columns.Bound(c => c.userlogins);
+                     columns.Bound(c => c.LoginDateTime).Format("{0:dd MMM yyyy hh:mm:ss}");
+     })
+
+                 .HtmlAttributes(new { style = "height: 500px; width: 550px" })
+                 .Scrollable()
+                 .Groupable()
+                 .Sortable()
+                 .DataSource(dataSource => dataSource
+                 .Ajax()
+                 .Read(read => read.Action("CustomersAllInfo_Read", "Admin", new { fromDate = Convert.ToDateTime(TempData["fromdate"]), toDate = Convert.ToDateTime(TempData["todate"]), CustomerId = Convert.ToString(TempData["CustomerId"]) }))
+           )
+)
+

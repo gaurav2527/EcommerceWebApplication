@@ -1,0 +1,36 @@
+﻿@model EcommerceWebApplication.Models.ProdutViewModel
+
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Available Produts</h2>
+<div id="container">
+    
+    @foreach (var item in Model.ProductInfo)
+    {
+        <hr style="background-color:black">
+        <div class="row">
+            <div class="col-md-4" style="margin-top:10px; margin-bottom: 10px">
+                <div style="padding: 5px">Product name: @Html.DisplayFor(modelItem => item.ProductName)</div>
+                <div style="padding: 5px">Price: @Html.DisplayFor(modelItem => item.ProductPrice) INR</div>
+                <div style="padding: 5px">Available Colors: @Html.DisplayFor(modelItem => item.Color)</div>
+                <div style="padding: 5px">Category: @Html.DisplayFor(modelItem => item.ProductCategory.ProductCategory1)</div>
+            </div>
+
+            <div class="col-md-4" style="margin-top: 10px; margin-bottom: 10px">
+                <div>   
+                    <img src="@Url.Content(item.Photo)" style="max-height: 200px; max-width: 200px" />
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top: 20px; margin-bottom: 10px">
+                <div>
+                    @Html.ActionLink("Add to Cart", "AddToCart", "ShoppingCart", new { productId = item.ProductID }, null)
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+

@@ -1,0 +1,82 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Style/StyleSheet1.css" rel="stylesheet" />
+    <link href="~/Style/StyleSheet2.css" rel="stylesheet" />
+    <!--This bundle was moved by the Telerik VS Extensions for compatibility reasons-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryui")
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="~/Scripts/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap-multiselect.css" type="text/css">
+    	<link href="@Url.Content("~/Content/kendo/2018.2.620/kendo.common-bootstrap.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2018.2.620/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2018.2.620/kendo.bootstrap.min.css")" rel="stylesheet" type="text/css" />
+	<script src="@Url.Content("~/Scripts/kendo/2018.2.620/jquery.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2018.2.620/jszip.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2018.2.620/kendo.all.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2018.2.620/kendo.aspnetmvc.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Response Shopping", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
+                    <li>@Html.ActionLink("Products", "Details", "ProductInfoes")</li>
+                    @*<li>@Html.ActionLink("Contact", "Index", "Home")</li>*@
+                    <li>@Html.ActionLink("Signup", "Create", "Customers")</li>
+                    <li>@Html.ActionLink("Login", "Login", "Customers")</li>
+                    <li>@Html.ActionLink("Cart", "Cart", "ShoppingCart")</li>
+                    @*<li>@Html.ActionLink("Practice", "Index", "practice")</li>*@
+                    <li>@Html.ActionLink("History", "Index", "OrderHistory")</li>
+                    @if (@Session["name"] != null)
+                    {
+                        <li>@Html.ActionLink("Logout", "LogOut", "Customers")</li>
+                    }
+                    @Html.Action("Index", "Roles")
+                </ul>
+                <div class="navbar-right">
+                    <p class="navbar-text">Welcome @Session["name"]</p>
+                    @if (@Session["name"] != null)
+                    {
+                        <p class="navbar-text">Last Logged: @Session["LastLogin"]</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="
+    width:100%; height:100%">
+        @RenderBody()
+    </div>
+
+   @*<footer class="footer">
+        <div class="container">
+            <div class="row footer-widgets">
+
+            </div>
+        </div>
+    </footer>*@
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+   

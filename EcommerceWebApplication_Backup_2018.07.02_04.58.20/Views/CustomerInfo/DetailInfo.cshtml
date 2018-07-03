@@ -1,0 +1,44 @@
+﻿@model List<EcommerceWebApplication.Models.EF.Customer>
+@Scripts.Render("~/bundles/jquery")
+<link href="~/Style/StyleSheet3.css" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.common-bootstrap.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/kendo/2018.2.516/kendo.bootstrap.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/jquery.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/jszip.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/kendo.all.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo/2018.2.516/kendo.aspnetmvc.min.js")"></script>
+<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+<h2>
+    Users Info
+</h2>
+@(Html.Kendo().Grid(Model)
+                .Name("grid")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.CustomerName).Width(120);
+                    columns.Bound(p => p.email).Width(120);
+                    columns.Bound(p => p.CustomerPassword).Width(120);
+                    columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
+                })
+                  .ToolBar(toolbar => toolbar.Create())
+                  .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                  .Pageable()
+                  .Sortable()
+                  .Scrollable()
+                  .HtmlAttributes(new { style = "height: 500px;" })
+                  .Scrollable()
+                  .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .Model(model => model.Id(p => p.CustomerID))
+                  .Model(model =>
+                  {
+                      model.Id(c => c.CustomerID); // Specify the property which is the unique identifier of the model.
+                      model.Field(c => c.CustomerID).Editable(false); // Make the CustomerID property not editable.
+                  })
+                  .Create(update => update.Action("Customer_Create", "CustomerInfo"))
+                  .Read(read => read.Action("Customer_Read", "CustomerInfo"))
+                  .Update(update => update.Action("Customer_Update", "CustomerInfo"))
+                  .Destroy(update => update.Action("Customer_Destroy", "CustomerInfo"))
+                )
+                )

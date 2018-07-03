@@ -1,0 +1,62 @@
+﻿@model EcommerceWebApplication.Models.ProdutViewModel
+
+@{
+    ViewBag.Title = "AddToCart";
+}
+
+<h2>AddToCart</h2>
+
+<div>
+    <h4>ProductInfo</h4>
+    <hr />
+    <div class="row product" id=@Html.DisplayFor(model => model.ProductDetails.ProductID)>
+        <div class="col-md-4" style="margin-top:10px; margin-bottom: 10px">
+            <div hidden style="padding: 5px">Product ID: @Html.DisplayFor(model => model.ProductDetails.ProductID)</div>
+            <div style="padding: 5px">Product name: @Html.DisplayFor(model => model.ProductDetails.ProductName)</div>
+            <div style="padding: 5px">Price: @Html.DisplayFor(model => model.ProductDetails.ProductPrice) INR</div>
+            <div style="padding: 5px">Available Colors: @Html.DisplayFor(model => model.ProductDetails.Color)</div>
+            <div style="padding: 5px">Category: @Html.DisplayFor(model => model.ProductDetails.ProductCategory.ProductCategory1)</div>
+        </div>
+        <div class="col-md-4" style="margin-top: 10px; margin-bottom: 10px">
+            <div>
+                <img src="@Url.Content(Model.ProductDetails.Photo)" style="max-height: 200px; max-width: 200px" />
+            </div>
+        </div>
+        <div class="col-md-4" style="margin-top: 20px">
+            <div>
+                <div>
+                    @Html.Label("Quantity")
+
+                    <input type="number" class="quant" name="Quantity" min="1" />
+                    <button type="submit" id="buttonSubmit">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#buttonSubmit').on('click', function () {
+            console.log($('.product'));
+            var product = {
+                "productId": $('.product').attr("id"),
+                "quantity": $('.product .quant').val(),
+            };
+            var newUrl= '@Url.Action("Welcome","Customers")';
+            console.log(product);
+
+            $.ajax({
+                url: "Order/Cart",
+                method: "POST",
+                data: JSON.stringify(product),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: (resp, status) => { console.log(resp) },
+                error: (msg) => { console.log(msg) },
+                timeout: 3000
+            });
+        });
+    });
+</script>
