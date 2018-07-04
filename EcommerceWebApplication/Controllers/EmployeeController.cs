@@ -131,7 +131,7 @@ namespace EcommerceWebApplication.Controllers
         }
 
 
-        public JsonResult Remote_Data_Binding_Get_Employees(int? id)
+        public JsonResult Get_Employees(int? id)
         {
             var dataContext = new ECommerce();
 
@@ -146,16 +146,6 @@ namespace EcommerceWebApplication.Controllers
                                                select q
                                                )
                             };
-            //List<> items = new List<>;
-            //var items = EmployeeMangerDetails();
-            //var viewmodel = items.Select(t => new
-            // var viewmodel = new
-            //{
-            //   id = 1,
-            //   Text = "Vicky",
-            //  hasChildren = "Nishu Sharma"
-            //};
-            // return Json(viewmodel, JsonRequestBehavior.AllowGet);
             return Json(employees, JsonRequestBehavior.AllowGet);
         }
 
@@ -174,6 +164,15 @@ namespace EcommerceWebApplication.Controllers
             //var response = EmployeeMangerDetails();
             //return Json(response, JsonRequestBehavior.AllowGet);
             // return RedirectToAction("Employee_Read");
+        }
+
+        //getting list of Managers
+        public ActionResult Manager_Dropdown()
+        {
+            var result = EmployeeMangerDetails();
+            var manager = from m in result
+                          select (m.ManagerName);
+            return Json(manager, JsonRequestBehavior.AllowGet);
         }
 
         //getting employee relationship table

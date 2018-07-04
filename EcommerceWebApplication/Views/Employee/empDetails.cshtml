@@ -9,49 +9,69 @@
 <script src="@Url.Content("~/Scripts/kendo/2018.2.620/kendo.all.min.js")"></script>
 <script src="@Url.Content("~/Scripts/kendo/2018.2.620/kendo.aspnetmvc.min.js")"></script>
 <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+<link rel="stylesheet" href="~/Style/StyleSheet3.css" />
+<style>
+    .green-row td {
+        background: green !important;
+    }
+</style>
+
 <h2>
     Users Info
 </h2>
 <div class="row">
     <div class="col-md-6">
         @(Html.Kendo().Grid(Model.EmployeesManager)
-                                                                            .Name("employeeInfo")
+                                                                                           .Name("employeeInfo")
 
-                                                                            .Columns(columns =>
-                                                                            {
-                                                                                columns.Bound(p => p.EmpID).Width(50);
-                                                                                columns.Bound(p => p.EmployeeName).Width(120);
-                                                                        //columns.Bound(p => p.ManagerName).Width(120);
-                                                                        columns.ForeignKey(p => p.Manager, Model.Employee, "EmpID", "EmployeeName").Width(120);
-                                                                                columns.Command(command => { command.Destroy(); }).Width(150);
-                                                                            })
-                                                                                    .Groupable()
-                                                                                    .Sortable()
-                                                                                    .Scrollable()
-                                                                                      .ToolBar(toolbar => { toolbar.Create(); toolbar.Save(); })
-                                                                                      .Editable(editable => editable.Mode(GridEditMode.InCell))
-                                                                                      .Pageable()
-                                                                                      .HtmlAttributes(new { style = "height: 500px; width: 550px" })
-                                                                                      .DataSource(dataSource => dataSource
-                                                                                      .Ajax()
-                                                                                      .Batch(true)
-                                                                                      .PageSize(10)
-                                                                                      .ServerOperation(false)
-                                                                                      .Model(model => model.Id(p => p.EmpID))
-                                                                                      .Model(model =>
-                                                                                      {
-                                                                                          model.Id(c => c.EmpID); // Specify the property which is the unique identifier of the model.
-                                                                                  model.Field(c => c.EmpID).Editable(false); // Make the CustomerID property not editable.
-                                                                                                                             //model.Field(c => c.CustomerID).Editable(false); // Make the CustomerID property not editable.
-                                                                              })
-                                                                                      .Read(read => read.Action("Employee_Read", "Employee"))
-                                                                                      .Create("Employee_Create", "Employee")
-                                                                                      .Update("Employee_Update", "Employee")
-                                                                                      .Destroy("Employee_Destroy", "Employee")
-                                                                                    //.Create(update => update.Action("Employee_Create", "Employee"))
-                                                                                    //.Update(update => update.Action("Employee_Update", "Employee"))
-                                                                                    //.Destroy(update => update.Action("Employee_Destroy", "Employee"))
-                                                                                    )
+                                                                                            .Columns(columns =>
+                                                                                            {
+                                                                                                columns.Bound(p => p.EmpID).Width(100).Filterable(false);
+                                                                                                columns.Bound(p => p.EmployeeName)
+                                                                                                .Width(120).Filterable(false);
+                                                                                        //columns.Bound(p => p.ManagerName).Width(120);
+                                                                                        columns.ForeignKey(p => p.Manager, Model.Employee, "EmpID", "EmployeeName")
+                                                                                                .Filterable(filterable => filterable.UI("Manager"))
+                                                                                                        .Width(120);
+                                                                                                columns.Command(command => { command.Destroy(); }).Width(150);
+                                                                                            })
+                                                                                            .Filterable(filterable => filterable
+                                                                                            .Extra(false)
+                                                                                            .Operators(operators => operators
+                                                                                            .ForEnums(enums => enums.Clear().IsEqualTo("Correspond to"))
+                                                                                            .ForString(str => str.Clear()
+                                                                                            .StartsWith("Starts with")
+                                                                                            .IsEqualTo("Is equal to")
+                                                                                            .IsNotEqualTo("Is not equal to")
+                                                                                            ))
+                                                                                             )
+                                                                                                    .Groupable()
+                                                                                                    .Sortable()
+                                                                                                    .Scrollable()
+                                                                                                      .ToolBar(toolbar => { toolbar.Create(); toolbar.Save(); })
+                                                                                                      .Editable(editable => editable.Mode(GridEditMode.InCell))
+                                                                                                      .Pageable()
+                                                                                                      .HtmlAttributes(new { style = "height: 500px; width: 550px" })
+                                                                                                      .DataSource(dataSource => dataSource
+                                                                                                      .Ajax()
+                                                                                                      .Batch(true)
+                                                                                                      .PageSize(10)
+                                                                                                      .ServerOperation(false)
+                                                                                                      .Model(model => model.Id(p => p.EmpID))
+                                                                                                      .Model(model =>
+                                                                                                      {
+                                                                                                          model.Id(c => c.EmpID); // Specify the property which is the unique identifier of the model.
+                                                                                                  model.Field(c => c.EmpID).Editable(false); // Make the CustomerID property not editable.
+                                                                                                                                             //model.Field(c => c.CustomerID).Editable(false); // Make the CustomerID property not editable.
+                                                                                              })
+                                                                                                      .Read(read => read.Action("Employee_Read", "Employee"))
+                                                                                                      .Create("Employee_Create", "Employee")
+                                                                                                      .Update("Employee_Update", "Employee")
+                                                                                                      .Destroy("Employee_Destroy", "Employee")
+                                                                                                    )
+                                                                                                    .Events(e => e.SaveChanges("saveChanges")
+                                                                                                    //.Change("onChange")
+                                                                                                    )
         )
     </div>
     <div class="col-md-6">
@@ -59,16 +79,19 @@
         <button id="EmployeeList">Open Employees</button>
         <div class="demo-section k-content" id="employeeManager">
             @(Html.Kendo().TreeView()
-                                                .Name("Employeetreeview")
-                                                .DataTextField("Name")
-                                                .DataSource(dataSource => dataSource
-                                                    .Read(read => read
-                                                        .Action("Remote_Data_Binding_Get_Employees", "Employee")
-                                                    )
-                                                )
-                                                .DragAndDrop(true)
-                                                .Events(e => e.Drop("onDrop"))
-
+                                                                .Name("Employeetreeview")
+                                                                .DataTextField("Name")
+                                                                .DataSource(dataSource => dataSource
+                                                                    .Read(read => read
+                                                                        .Action("Get_Employees", "Employee")
+                                                                    )
+                                                                )
+                                                                .DragAndDrop(true)
+                                                                .Events(e => e
+                                                                .Drop("onDrop")
+                                                                .Select("onSelect")
+                                                                //.Change("onChange")
+                                                                )
             )
         </div>
     </div>
@@ -106,13 +129,53 @@
             success: function (response) {
                 if (response != null) {
                     $('#employeeInfo').data("kendoGrid").dataSource.read();
-                    alert('success');
+                    //alert('success');
                 }
                 else
                     alert('Request Failed- Something went wrong');
             }
         });
         debugger
+    }
+
+    function saveChanges(e) {
+        $("#Employeetreeview").data("kendoTreeView").dataSource.read();
+    }
+
+    //select user in treeviw and highlight in grid
+    function onSelect(e) {
+
+        debugger
+        var data = this.dataItem(e.node);
+        var result = data.id;
+        //getting corresponding row in grid
+        var el = $("#employeeInfo"),
+            grid = el.data("kendoGrid"),
+            item = grid.dataSource.get(result);
+        
+        var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
+        grid.select(tr);
+    }
+    //deselect rows in kendo
+    /*function onChange(e) {
+        var grid = $("#employeeInfo").data("kendoGrid");
+        //$("#Employeetreeview").data("kendoTreeView").dataSource.read();
+        /*var el = $("#employeeInfo"),
+            grid = el.data("kendoGrid"),
+            item = grid.dataSource.get(result);
+        $(tr).removeClass("k-state-selected");*/
+    //}
+
+    //filterable manager column list
+    function Manager(element) {
+        element.kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: '@Url.Action("Manager_Dropdown", "Employee", null, "http")'
+                }
+            },
+            optionLabel: "--Select Value--"
+        });
     }
 </script>
 
