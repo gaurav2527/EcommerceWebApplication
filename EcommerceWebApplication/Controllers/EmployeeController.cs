@@ -80,7 +80,7 @@ namespace EcommerceWebApplication.Controllers
                     //bool isIn = result.Any(c => c.Manager.Equals(emp.EmpID));
                     var result = MangerList(emp.EmpID);
                     var a = emp.Manager;
-                    if (!result.Any(s => s.EmpID.Equals(a)) && !emp.EmpID.Equals(emp.Manager))
+                    if (!result.Any(s => s.EmpID.Equals(a)))
                     {
                         using (ECommerce db = new ECommerce())
                         {

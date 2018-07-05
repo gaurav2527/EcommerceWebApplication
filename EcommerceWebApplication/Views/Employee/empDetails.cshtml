@@ -144,7 +144,8 @@
 
     //select user in treeviw and highlight in grid
     function onSelect(e) {
-
+        debugger
+        $("tr.k-state-selected").removeClass("k-state-selected");
         debugger
         var data = this.dataItem(e.node);
         var result = data.id;
