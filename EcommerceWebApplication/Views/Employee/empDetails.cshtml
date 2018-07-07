@@ -28,7 +28,8 @@
                                                                                             {
                                                                                                 columns.Bound(p => p.EmpID).Width(100).Filterable(false);
                                                                                                 columns.Bound(p => p.EmployeeName)
-                                                                                                .Width(120).Filterable(false);
+                                                                                                .Filterable(filterable => filterable.UI("Employee"))
+                                                                                                .Width(120);
                                                                                         //columns.Bound(p => p.ManagerName).Width(120);
                                                                                         columns.ForeignKey(p => p.Manager, Model.Employee, "EmpID", "EmployeeName")
                                                                                                 .Filterable(filterable => filterable.UI("Manager"))
@@ -42,15 +43,15 @@
                                                                                             .ForString(str => str.Clear()
                                                                                             .StartsWith("Starts with")
                                                                                             .IsEqualTo("Is equal to")
-                                                                                            .IsNotEqualTo("Is not equal to")
+                                                                                            //.IsNotEqualTo("Is not equal to")
                                                                                             ))
                                                                                              )
                                                                                                     .Groupable()
                                                                                                     .Sortable()
                                                                                                     .Scrollable()
                                                                                                       .ToolBar(toolbar => { toolbar.Create(); toolbar.Save(); })
-                                                                                                      .Editable(editable => editable.Mode(GridEditMode.InCell))
-                                                                                                      .Pageable()
+                                                                                                      .Editable(editable => editable.Mode(GridEditMode.InCell).CreateAt(GridInsertRowPosition.Bottom))
+                                                                                                      .Pageable(pager => pager.Refresh(true))
                                                                                                       .HtmlAttributes(new { style = "height: 500px; width: 550px" })
                                                                                                       .DataSource(dataSource => dataSource
                                                                                                       .Ajax()
@@ -69,17 +70,20 @@
                                                                                                       .Update("Employee_Update", "Employee")
                                                                                                       .Destroy("Employee_Destroy", "Employee")
                                                                                                     )
-                                                                                                    .Events(e => e.SaveChanges("saveChanges")
-                                                                                                    //.Change("onChange")
+                                                                                                    //.Events(e => e.SaveChanges("saveChanges")
                                                                                                     )
         )
     </div>
-    <div class="col-md-6">
-        @*<a href="#demo" id="hide" class="btn btn-info" data-toggle="collapse">Simple collapsible</a>*@
+
+    <div class="col-md-6" id="employeetree">
         <button id="EmployeeList">Open Employees</button>
-        <div class="demo-section k-content" id="employeeManager">
+        <div class="demo-section k-content" id="employeeManager" style="padding-top:2px">
             @(Html.Kendo().TreeView()
                                                                 .Name("Employeetreeview")
+                                                                .Checkboxes(checkbox => checkbox
+                                                                .Name("Checkedfiles")
+                                                                .CheckChildren(true)
+                                                                )
                                                                 .DataTextField("Name")
                                                                 .DataSource(dataSource => dataSource
                                                                     .Read(read => read
@@ -90,21 +94,59 @@
                                                                 .Events(e => e
                                                                 .Drop("onDrop")
                                                                 .Select("onSelect")
-                                                                //.Change("onChange")
+                                                                .Check("onCheck")
+                                                                
                                                                 )
             )
+            <button id="submit">Apply</button>
         </div>
     </div>
 </div>
 
 <script>
-    $(document).ready(function () {
+   
+    // function that gathers IDs of checked nodes
+    function checkedNodeIds(nodes, checkedNodes) {
+        for (var i = 0; i < nodes.length; i++) {
+            if (nodes[i].checked) {
+                checkedNodes.push(nodes[i].id);
+            }
+
+            if (nodes[i].hasChildren) {
+                checkedNodeIds(nodes[i].children.view(), checkedNodes);
+            }
+        }
+    }
+
+    function onCheck(e) {
         debugger
-        $("#EmployeeList").click(function () {
+        var checkedNodes = [],
+            treeView = $("#Employeetreeview").data("kendoTreeView");
+
+        checkedNodeIds(treeView.dataSource.view(), checkedNodes);
+        debugger
+        if (checkedNodes.length > 0) {
             debugger
-            $("#employeeManager").toggle();
-            debugger
+            var ids = checkedNodes.join(",");
+        }
+
+            var filter = { logic: "or", filters: [] };
+            $.each(checkedNodes, function (i, v) {
+                filter.filters.push({
+                    field: "EmpID", operator: "eq", value: v
+                });
         });
+        debugger
+        var dataSource = $("#employeeInfo").data("kendoGrid").dataSource;
+        dataSource.filter(filter);
+    }
+
+    $("#EmployeeList").click(function () {
+        debugger
+        $("#employeeManager").toggle();
+        $('span.k-state-selected').removeClass("k-state-selected");
+        $("tr.k-state-selected").removeClass("k-state-selected");
+        debugger
     });
 
     function onDrop(e) {
@@ -129,7 +171,7 @@
             success: function (response) {
                 if (response != null) {
                     $('#employeeInfo').data("kendoGrid").dataSource.read();
-                    //alert('success');
+                    alert('success');
                 }
                 else
                     alert('Request Failed- Something went wrong');
@@ -139,7 +181,8 @@
     }
 
     function saveChanges(e) {
-        $("#Employeetreeview").data("kendoTreeView").dataSource.read();
+       // $("#Employeetreeview").data("kendoTreeView").dataSource.read();
+        $('#employeeInfo').data("kendoGrid").dataSource.read();
     }
 
     //select user in treeviw and highlight in grid
@@ -157,16 +200,7 @@
         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
         grid.select(tr);
     }
-    //deselect rows in kendo
-    /*function onChange(e) {
-        var grid = $("#employeeInfo").data("kendoGrid");
-        //$("#Employeetreeview").data("kendoTreeView").dataSource.read();
-        /*var el = $("#employeeInfo"),
-            grid = el.data("kendoGrid"),
-            item = grid.dataSource.get(result);
-        $(tr).removeClass("k-state-selected");*/
-    //}
-
+  
     //filterable manager column list
     function Manager(element) {
         element.kendoDropDownList({
@@ -178,5 +212,17 @@
             optionLabel: "--Select Value--"
         });
     }
+
+    function Employee(element) {
+        element.kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: '@Url.Action("Employee_List", "Employee", null, "http")'
+                }
+            },
+            optionLabel: "--Select Value--"
+        });
+        }
+
 </script>
 

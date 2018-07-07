@@ -26,7 +26,7 @@ namespace EcommerceWebApplication.Controllers
         }
 
         public ActionResult EmpDetails()
-        {
+         {
             db.Configuration.LazyLoadingEnabled = false;
             manager.Employee = db.Employees.ToList();
             manager.EmployeesManager = EmployeeMangerDetails();
@@ -38,9 +38,6 @@ namespace EcommerceWebApplication.Controllers
         {
             using (ECommerce db = new ECommerce())
             {
-                //IQueryable<Customer> customers = db.Customers;
-                //DataSourceResult result = customers.ToDataSourceResult(request);
-                //return Json(result, JsonRequestBehavior.AllowGet);
                 var result = EmployeeMangerDetails();
                 return Json(result.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
             }
@@ -65,6 +62,7 @@ namespace EcommerceWebApplication.Controllers
         }
 
 
+
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Employee_Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Employee> emps)
         {
@@ -74,13 +72,10 @@ namespace EcommerceWebApplication.Controllers
             {
                 foreach (var emp in emps)
                 {
-                    //var isIn = db.Employees.Where(s => s.EmpID.Equals(emp.Manager) && s.Manager.Equals(emp.EmpID));
-                    //var custEmpQuery = result.Where(c => c.Manager.Equals(emp.EmpID)); 
-                    //var isIn = result.Where(c => c.Manager.Equals(emp.EmpID));
-                    //bool isIn = result.Any(c => c.Manager.Equals(emp.EmpID));
                     var result = MangerList(emp.EmpID);
                     var a = emp.Manager;
-                    if (!result.Any(s => s.EmpID.Equals(a)))
+                    
+                    if (!result.Any(s => s.EmpID.Equals(a)) && emp.EmpID != emp.Manager)
                     {
                         using (ECommerce db = new ECommerce())
                         {
@@ -94,7 +89,7 @@ namespace EcommerceWebApplication.Controllers
                             db.Entry(entity).State = EntityState.Modified;
                             db.SaveChanges();
                         }
-                        return Json(emps.ToDataSourceResult(request, ModelState));
+                        //return Json(emps.ToDataSourceResult(request, ModelState));
                     }
                 }
             }
@@ -173,6 +168,15 @@ namespace EcommerceWebApplication.Controllers
             var manager = from m in result
                           select (m.ManagerName);
             return Json(manager, JsonRequestBehavior.AllowGet);
+        }
+
+        //getting Employee list
+        public ActionResult Employee_List()
+        {
+            var result = EmployeeMangerDetails();
+            var employee = from e in result
+                           select (e.EmployeeName);
+            return Json(employee, JsonRequestBehavior.AllowGet);
         }
 
         //getting employee relationship table
